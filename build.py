@@ -512,6 +512,14 @@ subscribe = (
     f'<p>Feed address: <code style="user-select:all">{esc(feed_url)}</code></p></details>'
     '</div></section>'
 )
+thanks = (
+    '<section class="post"><h1>Thank you for subscribing</h1><div class="prose">'
+    '<p>Your subscription is confirmed. New posts will arrive in your inbox.</p>'
+    f'<p class="follow"><a class="btn solid" href="{href("../", "")}">Back to the blog</a>'
+    f'<a class="btn" href="{href("../", "journal/")}">Browse all entries</a></p>'
+    '</div></section>'
+)
+write("thanks/index.html", page(root="../", title="Thank you", body=thanks, canonical="thanks/"))
 write("subscribe/index.html", page(root="../", title="Subscribe", body=subscribe, canonical="subscribe/"))
 write("feed.xsl", f'''<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
