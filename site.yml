@@ -43,3 +43,5 @@ my_pick_text: |
   you can't.
 # 이메일 구독 (follow.it, 무료) — 새 글이 구독자에게 자동으로 메일 발송됩니다
 subscribe_action: https://api.follow.it/subscription-form/L3lhWkwrbHMvVkpmVHBlRG9oSVZBbFVBQTdrVWhuTWNaZXhtWjc4REVxU1V4UnZLdlE0bE9PNnF2amc5bGhvT21iZm5RVGxjMVcrOWFLRkRSS1I3b3hqOFlackZUbEMzNHZVUUt6VlFhTDhhTTM0Q1JVZlMxeHJ4Z2F6NjY3cWp8UlZra21RRG9ldE42UUFMbU84RllRVUFQU3ZuVURnWXFPT1BUVUlCRXF2az0=/8
+# follow.it 피드 소유 인증
+follow_it_verification: 8qW2m9akl6qsTy5gDbB7

@@ -326,6 +326,8 @@ def page(*, root, title, body, current="", desc=None, canonical="", image="", ma
         f"<title>{esc(full_title)}</title>"
         '<meta name="claude:viewport-fit-sides" content="cover">'
         f'<meta name="description" content="{esc(desc)}">'
+        + (f'<meta name="follow.it-verification-code" content="{esc(SITE["follow_it_verification"])}"/>' if SITE.get("follow_it_verification") else "")
+        + f''
         f'<link rel="canonical" href="{SITE["url"]}/{canonical}">'
         f'<meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}">'
         f'<meta property="og:type" content="{"article" if canonical.startswith("post/") else "website"}">'
