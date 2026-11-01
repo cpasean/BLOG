@@ -21,6 +21,8 @@ PREVIEW = "--preview" in sys.argv
 OUT = ROOT / ("preview" if PREVIEW else "dist")
 SITE = yaml.safe_load((ROOT / "site.yml").read_text(encoding="utf-8"))
 SITE["url"] = SITE["url"].rstrip("/")
+import hashlib
+SITE_JS_VER = hashlib.md5((ROOT / "static/site.js").read_bytes()).hexdigest()[:8]
 
 # ---------------------------------------------------------------- content
 FM = re.compile(r"^---\s*\n(.*?)\n---\s*\n(.*)$", re.S)
@@ -364,7 +366,7 @@ def page(*, root, title, body, current="", desc=None, canonical="", image="", ma
         f'<nav class="nav" aria-label="Main">{nav}</nav></header>'
         f"<main>{fix_paths(body, root)}</main>"
         + music_widget()
-        + f'<script src="{root}site.js" defer></script>'
+        + f'<script src="{root}site.js?v={SITE_JS_VER}" defer></script>'
         f'<footer class="foot"><span>© {datetime.now().year} {esc(SITE["author"])}, CPA</span>'
         f'<span>Contact: <span class="addr">{esc(SITE["email"])}</span></span>'
         + (f'<span><a href="{esc(SITE["editor_url"])}" target="_blank" rel="noopener">Write a post</a></span>' if SITE.get("editor_url") else "")
