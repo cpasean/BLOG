@@ -1,0 +1,15 @@
+# 사이트 기본 설정 — 도메인을 사면 url만 바꾸면 됩니다.
+title: Sean Yeon
+tagline: CPA Data Scientist
+description: Notes on tax, finance and data science, and thoughts on life, by Sean Yeon, CPA.
+url: https://cpasean.github.io/BLOG
+author: Sean Yeon
+email: aicpasean@gmail.com
+location: New York, NY
+motto:
+  - Things happen for a reason.
+  - Let things just happen.
+  - Enjoy things with genuine.
+categories:
+  Work: Tax, finance and data science
+  Life: Thoughts, habits and diary
