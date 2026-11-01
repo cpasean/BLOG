@@ -85,7 +85,8 @@ def href(root, path):
 
 
 def fix_paths(text, root):
-    return re.sub(r'(src|href)="/(?!/)', lambda m: f'{m.group(1)}="{root}', text)
+    text = re.sub(r'(src|href|poster)="/(?!/)', lambda m: f'{m.group(1)}="{root}', text)
+    return re.sub(r"url\(/(?!/)", f"url({root}", text)
 
 
 def esc(s):
@@ -102,6 +103,8 @@ CSS = r"""
   /* Ledger book: green-ruled columns, ink, a red-ink mark. Masthead + single reading column. */
   --paper:#F5F7F3; --sheet:#FBFCFA; --ink:#18211D; --muted:#5B6862; --rule:#D6E0D8; --rule-strong:#B9C9BE;
   --green:#1E6A4E; --green-soft:#E3EEE7; --red:#B03A2E;
+  --sun:#FFEC9B; --sun-ink:#2B2615; --blush:#FFE0E0; --plum:#4E2A9A;
+  --script:"Pinyon Script","Snell Roundhand","Apple Chancery",cursive;
   --display:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif;
   --body:"Source Serif 4",Georgia,"Times New Roman",serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -109,13 +112,13 @@ CSS = r"""
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --paper:#0F1513; --sheet:#141B18; --ink:#E2E9E4; --muted:#93A39A; --rule:#24302B; --rule-strong:#33443C;
-  --green:#6CC39C; --green-soft:#1A2A23; --red:#E58273; color-scheme:dark}}
+  --green:#6CC39C; --green-soft:#1A2A23; --red:#E58273; --sun:#3A3320; --sun-ink:#F4E9C0; --blush:#3A2629; --plum:#C2AAF5; color-scheme:dark}}
 :root[data-theme="dark"]{
   --paper:#0F1513; --sheet:#141B18; --ink:#E2E9E4; --muted:#93A39A; --rule:#24302B; --rule-strong:#33443C;
-  --green:#6CC39C; --green-soft:#1A2A23; --red:#E58273; color-scheme:dark}
+  --green:#6CC39C; --green-soft:#1A2A23; --red:#E58273; --sun:#3A3320; --sun-ink:#F4E9C0; --blush:#3A2629; --plum:#C2AAF5; color-scheme:dark}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.7 var(--body);
+body{margin:0;overflow-x:clip;background:var(--paper);color:var(--ink);font:17px/1.7 var(--body);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 a{color:var(--green);text-underline-offset:3px;text-decoration-thickness:1px}
 a:hover{text-decoration-thickness:2px}
@@ -123,14 +126,64 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offs
 img{max-width:100%;height:auto}
 .wrap{max-width:62rem;margin:0 auto}
 
-/* masthead */
-.mast{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.5rem 1.5rem;
-  padding-block:1.4rem 1rem;border-bottom:3px double var(--rule-strong)}
-.brand{font:600 1.5rem/1 var(--display);letter-spacing:.01em;color:var(--ink);text-decoration:none}
-.brand small{display:block;margin-top:.35rem;font:500 .72rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.nav{display:flex;gap:1.25rem;font:500 .95rem/1 var(--display);letter-spacing:.03em}
-.nav a{color:var(--muted);text-decoration:none;padding-block:.3rem}
-.nav a[aria-current="page"],.nav a:hover{color:var(--ink);box-shadow:inset 0 -2px 0 var(--green)}
+/* masthead — Wix "Business Doctor" identity */
+.mast{text-align:center;padding-block:1.8rem 0}
+.kicker{margin:0;font:500 .74rem/1.4 var(--display);letter-spacing:.42em;text-transform:uppercase;color:var(--ink);padding-left:.42em}
+.brand{display:inline-block;margin:.35rem 0 .2rem;font:400 clamp(2.8rem,8vw,4.6rem)/1.15 var(--script);color:var(--plum);text-decoration:none;
+  text-shadow:2px 2px 0 color-mix(in srgb,var(--plum) 18%,transparent)}
+.brand:hover{text-decoration:none}
+.nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin-top:.8rem;
+  font:500 .92rem/1 var(--display);letter-spacing:.06em}
+.nav a{color:var(--ink);text-decoration:none;padding-block:.85rem}
+.nav a+a{border-left:1px solid var(--ink)}
+.nav a[aria-current="page"]{color:var(--plum)}
+.nav a:hover{background:var(--green-soft)}
+.nav a.write{color:var(--green)}
+
+/* full-bleed photo bands restored from Wix */
+.bleed{width:100vw;margin-left:calc(50% - 50vw)}
+.band{min-height:clamp(12rem,38vw,30rem);background:var(--sheet) center/cover no-repeat}
+@media (min-width:900px) and (prefers-reduced-motion:no-preference){.band.fixed{background-attachment:fixed}}
+.band.thin{min-height:clamp(7rem,14vw,11rem)}
+.split{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);margin-top:1.6rem}
+.split .photo{min-height:clamp(18rem,40vw,30rem);background:var(--sheet) center/cover no-repeat}
+.split .panel{background:var(--sun);display:grid;place-content:center;gap:1.4rem;text-align:center;padding:2.5rem 1.5rem}
+.panel h2{margin:0;font:italic 400 clamp(1.8rem,3.4vw,2.5rem)/1.1 var(--body);letter-spacing:.12em;color:var(--sun-ink)}
+.panel nav{display:grid;gap:1rem;font:500 .95rem var(--display);letter-spacing:.04em}
+.panel a{color:var(--sun-ink);text-decoration:none}
+.panel a:hover{text-decoration:underline}
+.blush{background:var(--blush);padding-block:2.6rem}
+.blush .in{max-width:var(--measure);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.blush p{margin:0 0 .9rem}
+.blush .sig{font:italic 1.05rem var(--body);margin:1.2rem 0 0}
+.follow{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+.btn{display:inline-block;font:500 .85rem/1 var(--display);letter-spacing:.06em;text-transform:uppercase;padding:.75rem 1.1rem;border:1px solid var(--ink);color:var(--ink);text-decoration:none;background:transparent;cursor:pointer}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn:hover{background:var(--ink);color:var(--paper)}
+
+/* train of thought + sidebar */
+.tot{display:grid;grid-template-columns:minmax(0,1fr) 17rem;gap:0 2.5rem;padding-top:2.4rem}
+.tot>div{min-width:0}
+.tot aside{border-left:1px solid var(--ink);padding-left:2rem;display:grid;gap:2.2rem;align-content:start}
+.eyebrow{margin:0 0 1rem;font:500 .95rem/1.3 var(--display);letter-spacing:.32em;text-transform:uppercase}
+.side img,.side video{display:block;width:100%;height:auto;border:1px solid var(--rule)}
+.side p{margin:.8rem 0 0;font-size:.95rem}
+.side .mot{font-style:italic;font-size:.95rem;line-height:1.6}
+.side .more{font:500 .88rem var(--display)}
+.side+.side{border-top:1px solid var(--ink);padding-top:1.8rem}
+.pick{white-space:pre-line;text-align:center;font-size:.92rem;line-height:1.55;margin-top:1rem}
+.pick a{font:600 .95rem var(--display);text-decoration:underline}
+.contact{background:var(--sun);color:var(--sun-ink);text-align:center;padding-block:3.5rem}
+.contact h2{margin:0 0 1rem;font:italic 400 clamp(2rem,4.5vw,3rem)/1.1 var(--body);letter-spacing:.14em}
+.contact p{margin:.2rem 0;font:.95rem var(--display)}
+.contact form{max-width:28rem;margin:1.8rem auto 0;display:grid;gap:.6rem;text-align:left;padding-inline:16px}
+.contact input,.contact textarea{font:inherit;font-size:.95rem;padding:.6rem .7rem;border:1px solid color-mix(in srgb,var(--sun-ink) 25%,transparent);background:var(--sheet);color:var(--ink);width:100%}
+.contact textarea{min-height:7rem;resize:vertical}
+.contact .btn{justify-self:center;border-color:var(--sun-ink);color:var(--sun-ink)}
+.contact .btn:hover{background:var(--sun-ink);color:var(--sun)}
+.contact .addr{user-select:all}
+.about-banner{margin-top:1.6rem;max-height:32rem;overflow:hidden}
+.about-banner img{display:block;width:100%;height:auto;object-fit:cover}
 
 /* home */
 .hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:2rem 3rem;padding-block:3rem 2.5rem;align-items:end}
@@ -203,7 +256,7 @@ img{max-width:100%;height:auto}
 .pager .next{text-align:right;grid-column:2}
 
 /* about */
-.about{display:grid;grid-template-columns:minmax(0,14rem) minmax(0,var(--measure));gap:2.5rem;padding-block:2.6rem 1rem;justify-content:center}
+.about{display:grid;grid-template-columns:minmax(0,var(--measure));padding-block:2.6rem 1rem;justify-content:center}
 .about figure{margin:0}
 .about figure img{border:1px solid var(--rule);filter:grayscale(.15)}
 .about figcaption{font:500 .72rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:.6rem}
@@ -227,6 +280,10 @@ img{max-width:100%;height:auto}
   .ledger .mins{display:none}
   .ex{grid-column:2/4;grid-row:3}
   .accounts{grid-template-columns:minmax(0,1fr)}
+  .split,.tot{grid-template-columns:minmax(0,1fr)}
+  .tot aside{border-left:0;padding-left:0;border-top:1px solid var(--ink);padding-top:2rem;margin-top:2.5rem}
+  .kicker{letter-spacing:.24em;font-size:.66rem}
+  .nav{font-size:.82rem;letter-spacing:.02em}
   .accounts a+a{padding-left:0;border-left:0;border-top:1px solid var(--rule)}
 }
 @media (prefers-reduced-motion:no-preference){.ledger a.row{transition:background-color .15s}}
@@ -239,7 +296,7 @@ HL_CSS = HtmlFormatter(style="friendly").get_style_defs(".hl") + (
 
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500'
-         '&family=IBM+Plex+Sans+Condensed:wght@500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">')
+         '&family=IBM+Plex+Sans+Condensed:wght@500;600&family=Pinyon+Script&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">')
 
 KATEX = ('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">'
          '<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>'
@@ -253,7 +310,7 @@ def page(*, root, title, body, current="", desc=None, canonical="", image="", ma
     nav = "".join(
         f'<a href="{href(root, p)}"{" aria-current=\"page\"" if current == k else ""}>{k}</a>'
         for k, p in (("Home", ""), ("Journal", "journal/"), ("About", "about/"))
-    )
+    ) + (f'<a class="write" href="{esc(SITE["editor_url"])}" target="_blank" rel="noopener">✎ Write</a>' if SITE.get("editor_url") else "")
     og_img = f"{SITE['url']}{image}" if image.startswith("/") else image
     head = (
         f"<title>{esc(full_title)}</title>"
@@ -268,12 +325,14 @@ def page(*, root, title, body, current="", desc=None, canonical="", image="", ma
         + f"<style>{CSS}{HL_CSS if '<div class=\"hl\"' in body else ''}</style>"
     )
     content = (
-        f'<div class="wrap"><header class="mast"><a class="brand" href="{href(root, "")}">{esc(SITE["title"])}'
-        f'<small>{esc(SITE["tagline"])} · {esc(SITE["location"])}</small></a><nav class="nav" aria-label="Main">{nav}</nav></header>'
+        f'<div class="wrap"><header class="mast"><p class="kicker">{esc(SITE.get("kicker", SITE["tagline"]))}</p>'
+        f'<a class="brand" href="{href(root, "")}">{esc(SITE.get("brand", SITE["title"]))}</a>'
+        f'<nav class="nav" aria-label="Main">{nav}</nav></header>'
         f"<main>{fix_paths(body, root)}</main>"
         f'<footer class="foot"><span>© {datetime.now().year} {esc(SITE["author"])}, CPA</span>'
         f'<span>Contact: <span class="addr">{esc(SITE["email"])}</span></span>'
-        f'<span><a href="{root}feed.xml">RSS</a></span></footer></div>'
+        + (f'<span><a href="{esc(SITE["editor_url"])}" target="_blank" rel="noopener">Write a post</a></span>' if SITE.get("editor_url") else "")
+        + f'<span><a href="{root}feed.xml">RSS</a></span></footer></div>'
     )
     if fragment:  # artifact preview root: skeleton is added by the host
         return '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">' + head + content
@@ -311,21 +370,50 @@ shutil.copytree(ROOT / "static", OUT)
 counts = {c: sum(p["category"] == c for p in posts) for c in SITE["categories"]}
 lastdate = {c: next((fmt_date(p["date"]) for p in posts if p["category"] == c), "") for c in SITE["categories"]}
 
-# home
+# home — section order restored from the Wix home page
 motto = "".join(f"<span>{esc(m)}</span>" for m in SITE["motto"])
-accounts = "".join(
-    f'<a href="{href("", "journal/")}#{c.lower()}"><span class="acct-code">Account · {esc(c)}</span>'
-    f'<strong>{esc(c)}</strong><span class="d">{esc(d)}</span>'
-    f'<span class="bal">{counts[c]} entries · last {lastdate[c]}</span></a>'
-    for c, d in SITE["categories"].items()
-)
+pick = next((p for p in posts if p["slug"] == SITE.get("my_pick")), None)
+pick_text = ""
+if pick:
+    pick_text = re.sub(r"<[^>]+>", "\n", pick["html"])
+    pick_text = re.sub(r"\n\s*\n+", "\n", html.unescape(pick_text)).strip()
+intro = "".join(f"<p>{esc(x.strip())}</p>" for x in SITE.get("intro", "").split("\n\n") if x.strip())
 home = (
-    '<section class="hero"><div><h1>Accounting for numbers, <em>and for a life well kept.</em></h1>'
-    f'<p>{esc(SITE["description"])}</p></div>'
-    f'<blockquote class="motto">{motto}<cite>Sean, 1.1.2021</cite></blockquote></section>'
-    f'<nav class="accounts" aria-label="Categories">{accounts}</nav>'
-    f'<div class="sect"><h2>Latest entries</h2><a href="{href("", "journal/")}">All {len(posts)} entries →</a></div>'
-    + ledger_rows(posts[:8], "")
+    '<section class="split bleed" aria-label="Welcome">'
+    '<div class="photo" style="background-image:url(/images/bg-wheat.jpg)" role="img" aria-label="Wheat field at sunset"></div>'
+    '<div class="panel"><h2>Life &amp; Thoughts</h2><nav aria-label="Sections">'
+    f'<a href="{href("", "journal/")}#life">Life &amp; Thoughts</a>'
+    f'<a href="{href("", "about/")}">About</a>'
+    f'<a href="{href("", "journal/")}#work">Financial Freedom</a></nav></div></section>'
+    f'<section class="blush bleed"><div class="in">{intro}<p class="sig">From the bottom of my heart,</p>'
+    f'<div class="follow"><a class="btn solid" href="feed.xml">Subscribe (RSS)</a>'
+    f'<a class="btn" href="{esc(SITE["instagram_blog"])}" target="_blank" rel="noopener">Instagram</a></div></div></section>'
+    '<div class="band thin fixed bleed" style="background-image:url(/images/bg-handwriting.jpg)" role="img" aria-label="Handwritten I CHOOSE"></div>'
+    '<section class="tot"><div>'
+    f'<div class="sect" style="margin-top:0"><h2 class="eyebrow" style="margin:0">Train of thought</h2><a href="{href("", "journal/")}">All {len(posts)} entries →</a></div>'
+    + ledger_rows(posts[:10], "")
+    + '</div><aside>'
+    '<div class="side"><h2 class="eyebrow">About me</h2>'
+    f'<a href="{esc(SITE["instagram_personal"])}" target="_blank" rel="noopener"><img src="/images/about-collage.jpg" alt="Photos of Sean Yeon" width="246" height="246" loading="lazy"></a>'
+    f'<p>{esc(SITE["tagline"])}</p><div class="mot">{"<br>".join(f"{i}. {esc(m)}" for i, m in enumerate(SITE["motto"], 1))}</div>'
+    f'<p class="more"><a href="{href("", "about/")}">Read more →</a></p></div>'
+    '<div class="side"><h2 class="eyebrow">Click me</h2>'
+    f'<a href="{esc(SITE["instagram_blog"])}" target="_blank" rel="noopener"><img src="/images/247b38f1425a4a52b28bc87c58d06333.jpg" alt="Hiking in the Swiss Alps" loading="lazy"></a></div>'
+    '<div class="side"><h2 class="eyebrow">My pick<br>of the month</h2>'
+    '<video src="/images/my-pick.mp4" poster="/images/my-pick-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Writing in a notebook"></video>'
+    + (f'<div class="pick"><a href="{href("", "post/" + pick["slug"] + "/")}">{esc(pick["title"])}</a>\n{esc(pick_text)}</div>' if pick and pick_text else
+       (f'<div class="pick"><a href="{href("", "post/" + pick["slug"] + "/")}">{esc(pick["title"])}</a></div>' if pick else ""))
+    + '</div></aside></section>'
+    '<div class="band fixed bleed" style="background-image:url(/images/bg-agenda.jpg);margin-top:3rem" role="img" aria-label="Leather agenda notebook"></div>'
+    '<section class="contact bleed" id="contact"><h2>Contact Sean</h2>'
+    f'<p>{esc(SITE.get("address", ""))}</p><p><span class="addr">{esc(SITE["email"])}</span></p>'
+    '<form id="cf"><input id="cf-name" name="name" placeholder="Name" autocomplete="name">'
+    '<input id="cf-subject" name="subject" placeholder="Subject" required>'
+    '<textarea id="cf-msg" name="message" placeholder="Type your message here..." required></textarea>'
+    '<button class="btn" type="submit">Send by email</button></form>'
+    f'<script>document.getElementById("cf").addEventListener("submit",function(e){{e.preventDefault();var f=e.target;'
+    f'location.href="mailto:{SITE["email"]}?subject="+encodeURIComponent(f.subject.value)+"&body="+encodeURIComponent(f.message.value+"\\n\\n"+f.name.value)}})</script>'
+    '</section>'
 )
 write("index.html", page(root="", title=SITE["title"], body=home, current="Home"))
 if PREVIEW:
@@ -371,9 +459,9 @@ for i, p in enumerate(posts):
 # about
 photo = about_meta.get("photo", "")
 about = (
-    '<section class="about">'
-    + (f'<figure><img src="{esc(photo)}" alt="Portrait of Sean Yeon"><figcaption>Sean Yeon · CPA, New Jersey</figcaption></figure>' if photo else "")
-    + f'<div><h1>About</h1><div class="prose">{render_md(about_body)}</div></div></section>'
+    (f'<figure class="about-banner bleed"><img src="{esc(photo)}" alt="Sean Yeon with colleagues"></figure>' if photo else "")
+    + f'<section class="about"><div><h1>About</h1><div class="prose">{render_md(about_body)}</div></div></section>'
+    '<div class="band fixed bleed" style="background-image:url(/images/bg-about.jpg);margin-top:3rem" role="img" aria-label="Travel photo"></div>'
 )
 write("about/index.html", page(root="../", title="About", body=about, current="About", canonical="about/", image=photo))
 

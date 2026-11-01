@@ -1,0 +1,73 @@
+# Pages CMS 설정 — https://app.pagescms.org 에서 이 저장소를 열면 웹에서 글을 쓸 수 있습니다.
+media:
+  input: static/images
+  output: /images
+
+content:
+  - name: posts
+    label: Posts (블로그 글)
+    type: collection
+    path: content/posts
+    format: yaml-frontmatter
+    filename: "{title}.md"
+    view:
+      fields: [title, date, category]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title (제목)
+        type: string
+        required: true
+      - name: date
+        label: Date (날짜)
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: category
+        label: Category (분류)
+        type: select
+        default: Life
+        options:
+          values: [Work, Life]
+      - name: draft
+        label: Draft — 체크하면 공개하지 않음
+        type: boolean
+        default: false
+      - name: cover
+        label: Cover image (대표 사진, 선택)
+        type: image
+      - name: math
+        label: Math formulas (수식 사용)
+        type: boolean
+        default: false
+      - name: legacy_url
+        label: Old Wix URL
+        type: string
+        hidden: true
+      - name: body
+        label: Body (본문)
+        type: rich-text
+        options:
+          format: markdown
+
+  - name: about
+    label: About page
+    type: file
+    path: content/about.md
+    format: yaml-frontmatter
+    fields:
+      - name: title
+        type: string
+      - name: photo
+        label: Banner photo
+        type: image
+      - name: body
+        type: rich-text
+        options:
+          format: markdown
+

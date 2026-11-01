@@ -13,3 +13,17 @@ motto:
 categories:
   Work: Tax, finance and data science
   Life: Thoughts, habits and diary
+# Wix에서 가져온 홈 화면 구성
+brand: Business Doctor
+kicker: Practice-based insight for a fruitful life
+intro: |
+  I love the sea. It has a special place in my heart, the cobalt-colored ocean with deep cozy waves and the spectacular vastness, namely, my secret spot.
+
+  I used to go to the nearest cafe to the sea and sit at a small table by the window. While reading a book, a piece of Jazz music was being played in the background.
+
+  I wouldn't have been happier than ever if there had not been a secret place to refresh and motivate myself.
+address: 222 East 44th Street, New York, NY 10017
+instagram_personal: https://www.instagram.com/seanyeonkh/
+instagram_blog: https://www.instagram.com/cpadatascientist/
+my_pick: i-choose          # MY PICK OF THE MONTH 에 연결할 글(파일 이름)
+editor_url: https://app.pagescms.org/cpasean/BLOG   # 사이트에서 글쓰기
