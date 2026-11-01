@@ -182,8 +182,8 @@ img{max-width:100%;height:auto}
 .contact .btn{justify-self:center;border-color:var(--sun-ink);color:var(--sun-ink)}
 .contact .btn:hover{background:var(--sun-ink);color:var(--sun)}
 .contact .addr{user-select:all}
-.about-banner{margin-top:1.6rem;max-height:32rem;overflow:hidden}
-.about-banner img{display:block;width:100%;height:auto;object-fit:cover}
+.about-banner{margin:1.6rem 0 0}
+.about-banner img{display:block;width:100%;height:auto}
 
 /* home */
 .hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:2rem 3rem;padding-block:3rem 2.5rem;align-items:end}
@@ -510,7 +510,7 @@ for i, p in enumerate(posts):
 # about
 photo = about_meta.get("photo", "")
 about = (
-    (f'<figure class="about-banner bleed"><img src="{esc(photo)}" alt="Sean Yeon with colleagues"></figure>' if photo else "")
+    (f'<figure class="about-banner"><img src="{esc(photo)}" alt="Sean Yeon with colleagues"></figure>' if photo else "")
     + f'<section class="about"><div><h1>About</h1><div class="prose">{render_md(about_body)}</div></div></section>'
     '<div class="band fixed bleed" style="background-image:url(/images/bg-about.jpg);margin-top:3rem" role="img" aria-label="Travel photo"></div>'
 )
