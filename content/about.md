@@ -3,11 +3,11 @@ title: About
 photo: /images/b09554e1714c49c796721c8a35b19592.jpg
 ---
 
-## Business Doctor
+## Financial Doctor
 
 I'm a CPA Data Scientist.
 
-I desire myself as a CPA Data Scientist who can deliver an integrated service to clients and finally, become a Business Doctor providing critical advice in terms of accounting and financial analysis just as a doctor prescribes medicines to patients.
+I desire myself as a CPA Data Scientist who can deliver an integrated service to clients and finally, become a Financial Doctor providing critical advice in terms of accounting and financial analysis just as a doctor prescribes medicines to patients.
 
 > *Things happen for a reason.*
 > *Let things just happen.*

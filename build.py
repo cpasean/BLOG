@@ -272,6 +272,16 @@ img{max-width:100%;height:auto}
 .post .subform{max-width:26rem;margin:1.6rem 0 2rem}
 details.other{margin-top:2rem;border-top:1px solid var(--rule);padding-top:1rem}
 details.other summary{cursor:pointer;font:500 .95rem var(--display);color:var(--muted)}
+.music{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;display:flex;flex-direction:column;align-items:flex-end;gap:.5rem}
+.music button{display:inline-flex;align-items:center;gap:.55rem;font:500 .85rem/1 var(--display);letter-spacing:.03em;padding:.7rem 1rem;border:1px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);cursor:pointer;box-shadow:0 4px 14px color-mix(in srgb,var(--ink) 18%,transparent)}
+.music button:hover{background:var(--ink);color:var(--paper)}
+.music .eq{display:inline-flex;gap:2px;align-items:flex-end;height:12px}
+.music .eq i{width:3px;background:currentColor;height:4px}
+.music[data-open] .eq i{animation:eq 1s ease-in-out infinite}.music .eq i:nth-child(2){animation-delay:.2s}.music .eq i:nth-child(3){animation-delay:.4s}
+@keyframes eq{50%{height:12px}}
+@media (prefers-reduced-motion:reduce){.music .eq i{animation:none!important}}
+.music .frame{width:min(352px,calc(100vw - 32px));border-radius:12px;overflow:hidden;box-shadow:0 8px 24px color-mix(in srgb,var(--ink) 25%,transparent)}
+.music iframe{display:block;width:100%;height:80px;border:0}
 /* footer */
 .foot{margin-top:4rem;border-top:3px double var(--rule-strong);padding-block:1.4rem 2.4rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem 2rem;
   font:400 .82rem/1.6 var(--mono);color:var(--muted)}
@@ -314,6 +324,20 @@ KATEX = ('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1
          'onload="renderMathInElement(document.querySelector(\'.prose\'),{delimiters:[{left:\'$$\',right:\'$$\',display:true},{left:\'\\\\(\',right:\'\\\\)\',display:false}]})"></script>')
 
 
+def music_widget():
+    """Background music like the Wix player: a small button that opens the official Spotify player on demand."""
+    track = SITE.get("music_spotify_track")
+    if not track:
+        return ""
+    label = esc(SITE.get("music_label", "Music"))
+    src = f"https://open.spotify.com/embed/track/{track}?utm_source=generator&theme=0"
+    return (f'<div class="music" id="music"><div class="frame" hidden></div>'
+            f'<button type="button" id="music-btn" aria-expanded="false" title="{label}"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span>Music</span></button></div>'
+            "<script>(function(){var m=document.getElementById('music'),b=document.getElementById('music-btn'),f=m.querySelector('.frame');"
+            "b.addEventListener('click',function(){var open=f.hidden;if(open&&!f.firstChild){f.innerHTML='<iframe src=\"" + src + "\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\" title=\"" + label + "\"></iframe>'}"
+            "f.hidden=!open;b.setAttribute('aria-expanded',String(open));if(open)m.setAttribute('data-open','');else m.removeAttribute('data-open')})})();</script>")
+
+
 def page(*, root, title, body, current="", desc=None, canonical="", image="", math=False, fragment=False):
     desc = desc or SITE["description"]
     full_title = title if title == SITE["title"] else f"{title} · {SITE['title']}"
@@ -341,6 +365,8 @@ def page(*, root, title, body, current="", desc=None, canonical="", image="", ma
         f'<a class="brand" href="{href(root, "")}">{esc(SITE.get("brand", SITE["title"]))}</a>'
         f'<nav class="nav" aria-label="Main">{nav}</nav></header>'
         f"<main>{fix_paths(body, root)}</main>"
+        + music_widget()
+        + f""
         f'<footer class="foot"><span>© {datetime.now().year} {esc(SITE["author"])}, CPA</span>'
         f'<span>Contact: <span class="addr">{esc(SITE["email"])}</span></span>'
         + (f'<span><a href="{esc(SITE["editor_url"])}" target="_blank" rel="noopener">Write a post</a></span>' if SITE.get("editor_url") else "")
