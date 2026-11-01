@@ -23,6 +23,13 @@ setup/github-pages-deploy.yml ← 자동 빌드·배포 설정 (.github/workflow
 - 공개 전에 저장만 하려면 **Draft** 를 체크하세요.
 - 편집기 설정은 저장소의 `.pages.yml` 에 있습니다.
 
+## 배경음악
+
+- 오른쪽 아래 **Music** 버튼, 또는 메뉴를 처음 누르면 자동 재생됩니다. 페이지를 옮겨도 끊기지 않습니다(페이지를 새로고침 없이 바꾸는 방식, `static/site.js`).
+- 방문자가 Pause를 누르면 그 방문 동안은 다시 자동 재생하지 않습니다.
+- 곡: Spotify 공식 음원 "Romance" (Yuhki Kuramoto, 앨범 Misty Lake Louise). 바꾸려면 `site.yml`의 `music_spotify_track` 에 Spotify 곡 ID를 넣으세요.
+- Spotify에 로그인하지 않은 방문자는 30초 미리듣기만 재생됩니다.
+
 ## 이메일 구독
 
 - 홈의 분홍 띠, 오른쪽 SUBSCRIBE 칸, Subscribe 페이지에 이메일 입력칸이 있습니다.
