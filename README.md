@@ -23,6 +23,11 @@ setup/github-pages-deploy.yml ← 자동 빌드·배포 설정 (.github/workflow
 - 공개 전에 저장만 하려면 **Draft** 를 체크하세요.
 - 편집기 설정은 저장소의 `.pages.yml` 에 있습니다.
 
+## 이메일 구독
+
+- 홈의 분홍 띠, 오른쪽 SUBSCRIBE 칸, Subscribe 페이지에 이메일 입력칸이 있습니다.
+- 새 글을 올리면 follow.it(무료)이 구독자에게 자동으로 메일을 보냅니다. 구독자 관리: https://follow.it/offered-feeds (aicpasean 계정)
+
 ## 홈 화면 꾸미기 (site.yml)
 
 - `intro`: 분홍 띠의 소개글

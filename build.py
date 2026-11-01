@@ -262,6 +262,16 @@ img{max-width:100%;height:auto}
 .about figcaption{font:500 .72rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:.6rem}
 .about h1{font:600 2.6rem/1.05 var(--display);margin:0 0 1rem}
 
+.subform{display:grid;gap:.55rem;margin-top:1rem;max-width:22rem}
+.subform label{font:500 .9rem var(--display)}
+.subform input{font:inherit;font-size:1rem;padding:.6rem .1rem;border:0;border-bottom:2px solid #E0337A;background:transparent;color:var(--ink)}
+.subform input:focus{outline:none;border-bottom-color:var(--plum)}
+.subform button{font:500 1rem/1 var(--display);padding:.95rem 1rem;border:0;background:#6A00F4;color:#fff;cursor:pointer}
+.subform button:hover{background:#5200BE}
+.subform small{color:var(--muted);font-size:.8rem}
+.post .subform{max-width:26rem;margin:1.6rem 0 2rem}
+details.other{margin-top:2rem;border-top:1px solid var(--rule);padding-top:1rem}
+details.other summary{cursor:pointer;font:500 .95rem var(--display);color:var(--muted)}
 /* footer */
 .foot{margin-top:4rem;border-top:3px double var(--rule-strong);padding-block:1.4rem 2.4rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem 2rem;
   font:400 .82rem/1.6 var(--mono);color:var(--muted)}
@@ -370,6 +380,18 @@ shutil.copytree(ROOT / "static", OUT)
 counts = {c: sum(p["category"] == c for p in posts) for c in SITE["categories"]}
 lastdate = {c: next((fmt_date(p["date"]) for p in posts if p["category"] == c), "") for c in SITE["categories"]}
 
+
+def subscribe_form(key):
+    """Email sign-up (Wix-style). Posts to the follow.it form set in site.yml (subscribe_action)."""
+    action = SITE.get("subscribe_action")
+    if not action:
+        return ""
+    return (f'<form class="subform" action="{esc(action)}" method="post" target="_blank">'
+            f'<label for="sub-{key}">Email address *</label>'
+            f'<input id="sub-{key}" type="email" name="email" placeholder="you@example.com" required autocomplete="email">'
+            '<button type="submit">Subscribe</button>'
+            '<small>New posts arrive in your inbox. Unsubscribe anytime.</small></form>')
+
 # home — section order restored from the Wix home page
 motto = "".join(f"<span>{esc(m)}</span>" for m in SITE["motto"])
 pick = next((p for p in posts if p["slug"] == SITE.get("my_pick")), None)
@@ -386,8 +408,8 @@ home = (
     f'<a href="{href("", "about/")}">About</a>'
     f'<a href="{href("", "journal/")}#work">Financial Freedom</a></nav></div></section>'
     f'<section class="blush bleed"><div class="in">{intro}<p class="sig">From the bottom of my heart,</p>'
-    f'<div class="follow"><a class="btn solid" href="{href("", "subscribe/")}">Subscribe</a>'
-    f'<a class="btn" href="{esc(SITE["instagram_blog"])}" target="_blank" rel="noopener">Instagram</a></div></div></section>'
+    + (subscribe_form("band") or f'<div class="follow"><a class="btn solid" href="{href("", "subscribe/")}">Subscribe</a></div>')
+    + '</div></section>'
     '<div class="band thin fixed bleed" style="background-image:url(/images/bg-handwriting.jpg)" role="img" aria-label="Handwritten I CHOOSE"></div>'
     '<section class="tot"><div>'
     f'<div class="sect" style="margin-top:0"><h2 class="eyebrow" style="margin:0">Train of thought</h2><a href="{href("", "journal/")}">All {len(posts)} entries →</a></div>'
@@ -399,7 +421,8 @@ home = (
     f'<p class="more"><a href="{href("", "about/")}">Read more →</a></p></div>'
     '<div class="side"><h2 class="eyebrow">Click me</h2>'
     f'<a href="{esc(SITE["instagram_blog"])}" target="_blank" rel="noopener"><img src="/images/247b38f1425a4a52b28bc87c58d06333.jpg" alt="Hiking in the Swiss Alps" loading="lazy"></a></div>'
-    '<div class="side"><h2 class="eyebrow">My pick<br>of the month</h2>'
+    + (f'<div class="side"><h2 class="eyebrow">Subscribe</h2>{subscribe_form("side")}</div>' if SITE.get("subscribe_action") else "")
+    + '<div class="side"><h2 class="eyebrow">My pick<br>of the month</h2>'
     '<video src="/images/my-pick.mp4" poster="/images/my-pick-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Writing in a notebook"></video>'
     + (f'<div class="pick"><a href="{href("", "post/" + pick["slug"] + "/")}">{esc(pick["title"])}</a>\n{esc(pick_text)}</div>' if pick and pick_text else
        (f'<div class="pick"><a href="{href("", "post/" + pick["slug"] + "/")}">{esc(pick["title"])}</a></div>' if pick else ""))
@@ -477,18 +500,15 @@ feed_url = f"{SITE['url']}/feed.xml"
 from urllib.parse import quote
 subscribe = (
     '<section class="post"><h1>Subscribe</h1><div class="prose">'
-    '<p>Get new entries from this blog as soon as they are published. Pick the way that suits you.</p>'
-    '<h2>1. Follow in a reader app (free)</h2>'
-    '<p>A reader app collects new posts from blogs you follow, like an inbox. Tap one to follow this blog in one step:</p>'
-    f'<p class="follow"><a class="btn solid" href="https://feedly.com/i/subscription/feed/{quote(feed_url, safe="")}" target="_blank" rel="noopener">Follow on Feedly</a>'
-    f'<a class="btn" href="https://www.inoreader.com/?add_feed={quote(feed_url, safe="")}" target="_blank" rel="noopener">Follow on Inoreader</a></p>'
-    '<p>Using another app? Copy this feed address into it:</p>'
-    f'<p><code id="feed-url" style="user-select:all">{esc(feed_url)}</code> <button class="btn" type="button" id="copy-feed">Copy</button></p>'
-    '<h2>2. Follow on Instagram</h2>'
-    f'<p><a href="{esc(SITE["instagram_blog"])}" target="_blank" rel="noopener">@cpadatascientist</a></p>'
+    '<p>Enter your email address and every new post will be sent to your inbox.</p>'
+    + subscribe_form("page") +
+    '<details class="other"><summary>Other ways to follow</summary>'
+    '<p>Use a news reader app instead of email:</p>'
+    f'<p class="follow"><a class="btn" href="https://feedly.com/i/subscription/feed/{quote(feed_url, safe="")}" target="_blank" rel="noopener">Feedly</a>'
+    f'<a class="btn" href="https://www.inoreader.com/?add_feed={quote(feed_url, safe="")}" target="_blank" rel="noopener">Inoreader</a>'
+    f'<a class="btn" href="{esc(SITE["instagram_blog"])}" target="_blank" rel="noopener">Instagram</a></p>'
+    f'<p>Feed address: <code style="user-select:all">{esc(feed_url)}</code></p></details>'
     '</div></section>'
-    """<script>document.getElementById('copy-feed').addEventListener('click',function(e){var b=e.target,t=document.getElementById('feed-url').textContent;
-(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='Copied'},function(){var r=document.createRange();r.selectNodeContents(document.getElementById('feed-url'));var s=getSelection();s.removeAllRanges();s.addRange(r)})})</script>"""
 )
 write("subscribe/index.html", page(root="../", title="Subscribe", body=subscribe, canonical="subscribe/"))
 write("feed.xsl", f'''<?xml version="1.0" encoding="UTF-8"?>
