@@ -35,9 +35,11 @@
         controller = c;
         c.addListener("playback_update", function (e) {
           playing = !e.data.isPaused;
+          if (playing) frame.hidden = false;
           setUI();
         });
-        if (wantPlay) c.play();
+        // Try to start as soon as the site opens (works when the browser allows sound)
+        if (wantPlay || !store(true)) c.play();
       });
     };
     var s = document.createElement("script");
@@ -64,12 +66,15 @@
       setUI();
     });
 
-    // Auto-play when a menu item is clicked (a click lets the browser allow sound)
-    document.addEventListener("click", function (e) {
-      var a = e.target.closest && e.target.closest(".nav a, .panel a, .brand");
-      if (!a || playing || store(true)) return;
+    // If the browser blocked sound on arrival, start on the visitor's first click, tap or key press anywhere
+    function firstTouch(e) {
+      if (e.target.closest && e.target.closest("#music")) return; // the Music button handles itself
+      if (playing || store(true)) return;
       start();
-    }, true);
+    }
+    ["pointerdown", "keydown", "touchend"].forEach(function (ev) {
+      document.addEventListener(ev, firstTouch, true);
+    });
     window.__startMusic = start;
   }
 
