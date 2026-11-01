@@ -37,7 +37,7 @@ setup/github-pages-deploy.yml ← 자동 빌드·배포 설정 (.github/workflow
 ## 새 글 쓰기 (파일로 직접)
 
 1. `content/posts/` 에 새 파일을 만듭니다. 파일 이름이 주소가 됩니다.
-   예) `my-first-post.md` → `https://cpasean.github.io/BLOG/post/my-first-post/`
+   예) `my-first-post.md` → `https://seanyeon.com/post/my-first-post/`
 2. 맨 위에 아래 머리말을 넣고, 그 아래에 본문을 Markdown으로 씁니다.
 
 ~~~markdown
@@ -75,18 +75,13 @@ python -m http.server 8000 --directory dist
 ## 배포 (GitHub Pages, 무료)
 
 - 저장소: https://github.com/cpasean/BLOG
-- 블로그 주소: https://cpasean.github.io/BLOG/
+- 블로그 주소: https://seanyeon.com (예전 주소 cpasean.github.io/BLOG 는 자동으로 연결됨)
 - 저장소의 `main` 브랜치에 글을 올리면(push) `.github/workflows/deploy.yml`이 자동으로 빌드해서 1~2분 뒤 사이트에 반영됩니다.
 - 가장 쉬운 방법: GitHub 웹에서 `content/posts` 폴더 → **Add file → Create new file** 로 글을 바로 써도 됩니다.
 - 내 컴퓨터에서 쓰려면 GitHub Desktop으로 저장소를 내려받아(clone) 그 폴더에서 작업하세요.
-- 주소를 `cpasean.github.io` 로 짧게 하려면: 저장소 이름을 `cpasean.github.io` 로 바꾸고 `site.yml`의 `url`을 `https://cpasean.github.io` 로 고치면 됩니다.
+- 도메인: seanyeon.com (Cloudflare에서 구입, 매년 자동 갱신). DNS는 Cloudflare, A 레코드 4개 + www CNAME → cpasean.github.io
 - `setup/github-pages-deploy.yml` 은 `.github/workflows/deploy.yml` 의 사본입니다.
 
-## 나중에 도메인을 사면
-
-1. 도메인 구입 (예: seanyeon.com, 연 $10~15 정도)
-2. `site.yml` 의 `url` 을 새 도메인으로 변경
-3. GitHub 저장소 **Settings → Pages → Custom domain** 에 도메인 입력, 도메인 업체 DNS에 GitHub 안내대로 레코드 추가
 
 ## 이전 메모 (Wix → 새 사이트)
 
