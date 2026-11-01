@@ -332,7 +332,7 @@ def page(*, root, title, body, current="", desc=None, canonical="", image="", ma
         f'<footer class="foot"><span>© {datetime.now().year} {esc(SITE["author"])}, CPA</span>'
         f'<span>Contact: <span class="addr">{esc(SITE["email"])}</span></span>'
         + (f'<span><a href="{esc(SITE["editor_url"])}" target="_blank" rel="noopener">Write a post</a></span>' if SITE.get("editor_url") else "")
-        + f'<span><a href="{root}feed.xml">RSS</a></span></footer></div>'
+        + f'<span><a href="{href(root, "subscribe/")}">Subscribe</a></span></footer></div>'
     )
     if fragment:  # artifact preview root: skeleton is added by the host
         return '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">' + head + content
@@ -386,7 +386,7 @@ home = (
     f'<a href="{href("", "about/")}">About</a>'
     f'<a href="{href("", "journal/")}#work">Financial Freedom</a></nav></div></section>'
     f'<section class="blush bleed"><div class="in">{intro}<p class="sig">From the bottom of my heart,</p>'
-    f'<div class="follow"><a class="btn solid" href="feed.xml">Subscribe (RSS)</a>'
+    f'<div class="follow"><a class="btn solid" href="{href("", "subscribe/")}">Subscribe</a>'
     f'<a class="btn" href="{esc(SITE["instagram_blog"])}" target="_blank" rel="noopener">Instagram</a></div></div></section>'
     '<div class="band thin fixed bleed" style="background-image:url(/images/bg-handwriting.jpg)" role="img" aria-label="Handwritten I CHOOSE"></div>'
     '<section class="tot"><div>'
@@ -471,6 +471,43 @@ BASE = BASE.rstrip("/") + "/"
 write("404.html", page(root=BASE, title="Page not found", body='<section class="page-h"><h1>No such entry</h1>'
                        '<p>This page is not in the ledger. Try the <a href="/journal/">Journal</a>.</p></section>'))
 
+
+# subscribe page — friendly landing instead of raw XML
+feed_url = f"{SITE['url']}/feed.xml"
+from urllib.parse import quote
+subscribe = (
+    '<section class="post"><h1>Subscribe</h1><div class="prose">'
+    '<p>Get new entries from this blog as soon as they are published. Pick the way that suits you.</p>'
+    '<h2>1. Follow in a reader app (free)</h2>'
+    '<p>A reader app collects new posts from blogs you follow, like an inbox. Tap one to follow this blog in one step:</p>'
+    f'<p class="follow"><a class="btn solid" href="https://feedly.com/i/subscription/feed/{quote(feed_url, safe="")}" target="_blank" rel="noopener">Follow on Feedly</a>'
+    f'<a class="btn" href="https://www.inoreader.com/?add_feed={quote(feed_url, safe="")}" target="_blank" rel="noopener">Follow on Inoreader</a></p>'
+    '<p>Using another app? Copy this feed address into it:</p>'
+    f'<p><code id="feed-url" style="user-select:all">{esc(feed_url)}</code> <button class="btn" type="button" id="copy-feed">Copy</button></p>'
+    '<h2>2. Follow on Instagram</h2>'
+    f'<p><a href="{esc(SITE["instagram_blog"])}" target="_blank" rel="noopener">@cpadatascientist</a></p>'
+    '</div></section>'
+    """<script>document.getElementById('copy-feed').addEventListener('click',function(e){var b=e.target,t=document.getElementById('feed-url').textContent;
+(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='Copied'},function(){var r=document.createRange();r.selectNodeContents(document.getElementById('feed-url'));var s=getSelection();s.removeAllRanges();s.addRange(r)})})</script>"""
+)
+write("subscribe/index.html", page(root="../", title="Subscribe", body=subscribe, canonical="subscribe/"))
+write("feed.xsl", f'''<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:output method="html" encoding="UTF-8"/>
+<xsl:template match="/rss/channel">
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title><xsl:value-of select="title"/> · RSS feed</title>
+<style>body{{margin:0;padding:2rem max(16px,env(safe-area-inset-left,0px));font:17px/1.6 Georgia,serif;background:#F5F7F3;color:#18211D}}
+main{{max-width:40rem;margin:0 auto}}.note{{background:#FFEC9B;padding:1rem 1.2rem;margin-bottom:2rem}}
+a{{color:#1E6A4E}}h1{{font-family:Arial Narrow,Arial,sans-serif}}li{{margin:.6rem 0}}small{{color:#5B6862}}
+@media (prefers-color-scheme:dark){{body{{background:#0F1513;color:#E2E9E4}}.note{{background:#3A3320}}a{{color:#6CC39C}}small{{color:#93A39A}}}}</style></head>
+<body><main><div class="note"><strong>This is an RSS feed.</strong> Copy this page's address into a reader app to follow the blog,
+or see <a href="subscribe/">easy ways to subscribe</a>.</div>
+<h1><xsl:value-of select="title"/></h1><p><xsl:value-of select="description"/></p>
+<ul><xsl:for-each select="item"><li><a href="{{link}}"><xsl:value-of select="title"/></a><br/><small><xsl:value-of select="substring(pubDate,6,11)"/></small></li></xsl:for-each></ul>
+<p><a href="./">← Back to the blog</a></p></main></body></html>
+</xsl:template></xsl:stylesheet>''')
+
 # feed + sitemap
 items = "".join(
     f"<item><title>{esc(p['title'])}</title><link>{SITE['url']}/post/{p['slug']}/</link>"
@@ -478,9 +515,9 @@ items = "".join(
     f"<category>{esc(p['category'])}</category><description>{esc(p['excerpt'])}</description></item>"
     for p in posts[:30]
 )
-write("feed.xml", f'<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>{esc(SITE["title"])}</title>'
+write("feed.xml", f'<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="feed.xsl"?><rss version="2.0"><channel><title>{esc(SITE["title"])}</title>'
       f'<link>{SITE["url"]}/</link><description>{esc(SITE["description"])}</description>{items}</channel></rss>')
-urls = ["", "journal/", "about/"] + [f"post/{p['slug']}/" for p in posts]
+urls = ["", "journal/", "about/", "subscribe/"] + [f"post/{p['slug']}/" for p in posts]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
       + "".join(f"<url><loc>{SITE['url']}/{u}</loc></url>" for u in urls) + "</urlset>")
 write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE['url']}/sitemap.xml\n")
