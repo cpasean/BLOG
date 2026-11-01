@@ -373,8 +373,8 @@ lastdate = {c: next((fmt_date(p["date"]) for p in posts if p["category"] == c), 
 # home — section order restored from the Wix home page
 motto = "".join(f"<span>{esc(m)}</span>" for m in SITE["motto"])
 pick = next((p for p in posts if p["slug"] == SITE.get("my_pick")), None)
-pick_text = ""
-if pick:
+pick_text = SITE.get("my_pick_text", "").strip()
+if pick and not pick_text:
     pick_text = re.sub(r"<[^>]+>", "\n", pick["html"])
     pick_text = re.sub(r"\n\s*\n+", "\n", html.unescape(pick_text)).strip()
 intro = "".join(f"<p>{esc(x.strip())}</p>" for x in SITE.get("intro", "").split("\n\n") if x.strip())
@@ -391,7 +391,7 @@ home = (
     '<div class="band thin fixed bleed" style="background-image:url(/images/bg-handwriting.jpg)" role="img" aria-label="Handwritten I CHOOSE"></div>'
     '<section class="tot"><div>'
     f'<div class="sect" style="margin-top:0"><h2 class="eyebrow" style="margin:0">Train of thought</h2><a href="{href("", "journal/")}">All {len(posts)} entries →</a></div>'
-    + ledger_rows(posts[:10], "")
+    + ledger_rows(posts[:14], "")
     + '</div><aside>'
     '<div class="side"><h2 class="eyebrow">About me</h2>'
     f'<a href="{esc(SITE["instagram_personal"])}" target="_blank" rel="noopener"><img src="/images/about-collage.jpg" alt="Photos of Sean Yeon" width="246" height="246" loading="lazy"></a>'
