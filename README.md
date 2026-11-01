@@ -13,7 +13,23 @@ build.py         ← 사이트 생성기
 setup/github-pages-deploy.yml ← 자동 빌드·배포 설정 (.github/workflows 로 옮겨 사용)
 ```
 
-## 새 글 쓰기
+## 사이트에서 바로 글쓰기 (추천)
+
+1. 블로그 메뉴의 **✎ Write** 를 누르거나 https://app.pagescms.org/cpasean/BLOG 로 갑니다 (GitHub 계정으로 로그인).
+2. **Posts → Add an entry** 를 누릅니다.
+3. 제목, 날짜, 분류(Work/Life)를 넣고 본문을 씁니다. 사진은 본문 편집기의 이미지 버튼으로 바로 올릴 수 있습니다.
+4. **Save** 를 누르면 1~2분 뒤 블로그에 자동으로 게시됩니다.
+- 기존 글 수정도 같은 화면에서 **Edit** 로 합니다.
+- 공개 전에 저장만 하려면 **Draft** 를 체크하세요.
+- 편집기 설정은 저장소의 `.pages.yml` 에 있습니다.
+
+## 홈 화면 꾸미기 (site.yml)
+
+- `intro`: 분홍 띠의 소개글
+- `my_pick`, `my_pick_text`: MY PICK OF THE MONTH 에 연결할 글과 문구
+- 배경 사진: `static/images/bg-wheat.jpg`, `bg-handwriting.jpg`, `bg-agenda.jpg`, `bg-about.jpg` 를 같은 이름의 다른 사진으로 바꾸면 됩니다.
+
+## 새 글 쓰기 (파일로 직접)
 
 1. `content/posts/` 에 새 파일을 만듭니다. 파일 이름이 주소가 됩니다.
    예) `my-first-post.md` → `https://cpasean.github.io/BLOG/post/my-first-post/`
