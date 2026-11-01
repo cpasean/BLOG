@@ -277,11 +277,12 @@ details.other summary{cursor:pointer;font:500 .95rem var(--display);color:var(--
 .music button:hover{background:var(--ink);color:var(--paper)}
 .music .eq{display:inline-flex;gap:2px;align-items:flex-end;height:12px}
 .music .eq i{width:3px;background:currentColor;height:4px}
-.music[data-open] .eq i{animation:eq 1s ease-in-out infinite}.music .eq i:nth-child(2){animation-delay:.2s}.music .eq i:nth-child(3){animation-delay:.4s}
+.music[data-playing] .eq i{animation:eq 1s ease-in-out infinite}.music .eq i:nth-child(2){animation-delay:.2s}.music .eq i:nth-child(3){animation-delay:.4s}
 @keyframes eq{50%{height:12px}}
 @media (prefers-reduced-motion:reduce){.music .eq i{animation:none!important}}
 .music .frame{width:min(352px,calc(100vw - 32px));border-radius:12px;overflow:hidden;box-shadow:0 8px 24px color-mix(in srgb,var(--ink) 25%,transparent)}
 .music iframe{display:block;width:100%;height:80px;border:0}
+.music .frame[hidden]{display:block!important;position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
 /* footer */
 .foot{margin-top:4rem;border-top:3px double var(--rule-strong);padding-block:1.4rem 2.4rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem 2rem;
   font:400 .82rem/1.6 var(--mono);color:var(--muted)}
@@ -325,17 +326,14 @@ KATEX = ('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1
 
 
 def music_widget():
-    """Background music like the Wix player: a small button that opens the official Spotify player on demand."""
+    """Background music like the Wix player. Behaviour lives in static/site.js (Spotify iFrame API)."""
     track = SITE.get("music_spotify_track")
     if not track:
         return ""
     label = esc(SITE.get("music_label", "Music"))
-    src = f"https://open.spotify.com/embed/track/{track}?utm_source=generator&theme=0"
-    return (f'<div class="music" id="music"><div class="frame" hidden></div>'
-            f'<button type="button" id="music-btn" aria-expanded="false" title="{label}"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span>Music</span></button></div>'
-            "<script>(function(){var m=document.getElementById('music'),b=document.getElementById('music-btn'),f=m.querySelector('.frame');"
-            "b.addEventListener('click',function(){var open=f.hidden;if(open&&!f.firstChild){f.innerHTML='<iframe src=\"" + src + "\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\" title=\"" + label + "\"></iframe>'}"
-            "f.hidden=!open;b.setAttribute('aria-expanded',String(open));if(open)m.setAttribute('data-open','');else m.removeAttribute('data-open')})})();</script>")
+    return (f'<div class="music" id="music" data-uri="spotify:track:{esc(track)}"><div class="frame" hidden></div>'
+            f'<button type="button" id="music-btn" aria-expanded="false" aria-label="Play music" title="{label}">'
+            '<span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span class="lbl">Music</span></button></div>')
 
 
 def page(*, root, title, body, current="", desc=None, canonical="", image="", math=False, fragment=False):
@@ -366,7 +364,7 @@ def page(*, root, title, body, current="", desc=None, canonical="", image="", ma
         f'<nav class="nav" aria-label="Main">{nav}</nav></header>'
         f"<main>{fix_paths(body, root)}</main>"
         + music_widget()
-        + f""
+        + f'<script src="{root}site.js" defer></script>'
         f'<footer class="foot"><span>© {datetime.now().year} {esc(SITE["author"])}, CPA</span>'
         f'<span>Contact: <span class="addr">{esc(SITE["email"])}</span></span>'
         + (f'<span><a href="{esc(SITE["editor_url"])}" target="_blank" rel="noopener">Write a post</a></span>' if SITE.get("editor_url") else "")

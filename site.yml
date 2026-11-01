@@ -46,5 +46,5 @@ subscribe_action: https://api.follow.it/subscription-form/L3lhWkwrbHMvVkpmVHBlRG
 # follow.it 피드 소유 인증
 follow_it_verification: 8qW2m9akl6qsTy5gDbB7
 # 배경음악 (Spotify 공식 음원) — 다른 곡으로 바꾸려면 Spotify 곡 링크의 track/ 뒤 ID를 넣으세요
-music_spotify_track: 0bSlc3JP7XunkKyrRayVAP
-music_label: "Romance — Yuhki Kuramoto (A Bittersweet Life OST)"
+music_spotify_track: 7fbCwWA3zgOgKmHupdPxmy
+music_label: "Romance — Yuhki Kuramoto (A Bittersweet Life theme)"
