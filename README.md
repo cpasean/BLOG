@@ -27,6 +27,8 @@ setup/github-pages-deploy.yml ← 자동 빌드·배포 설정 (.github/workflow
 ## 배경음악
 
 - 편집기(✎ Write) → **Background music** 에서 mp3를 올리고 곡 이름을 적어 Save하면, 모든 페이지 오른쪽 아래에 ▶ 재생 버튼과 음량 막대가 생깁니다. 파일을 비우면 버튼이 사라집니다.
+- **파일 크기는 신경 쓰지 않아도 됩니다.** 올린 음악은 자동으로 웹용 크기(96kbps mp3, 1분에 약 0.7MB)로 줄여집니다.
+- 편집기는 4MB까지만 올라가니, 더 큰 파일은 https://github.com/cpasean/BLOG/upload/main/music-upload 에서 **끌어다 놓기 → Commit changes** 하세요(25MB까지). 1~2분 뒤 자동으로 줄여서 재생 버튼에 연결하고 원본은 지웁니다.
 - 접속 즉시 재생을 시도하고, 브라우저가 막으면 화면 어디든 처음 누르는 순간 재생됩니다. 전곡이 반복 재생됩니다.
 - 방문자가 Pause를 누르면 그 방문 동안은 다시 자동 재생하지 않습니다.
 

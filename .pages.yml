@@ -94,6 +94,7 @@ content:
         type: string
       - name: file
         label: Audio file (mp3 올리기)
+        description: "4MB까지 여기서 올릴 수 있고 저장하면 자동으로 웹용 크기로 줄여 줍니다. 더 큰 파일은 https://github.com/cpasean/BLOG/upload/main/music-upload 에 올리세요 (25MB까지)."
         type: file
         options:
           extensions: [mp3, m4a, ogg, wav]
