@@ -340,8 +340,9 @@ details.other summary{cursor:pointer;font:500 .95rem var(--display);color:var(--
 .lcard:hover{box-shadow:0 6px 18px color-mix(in srgb,var(--ink) 15%,transparent)}
 .lcard.noimg{grid-template-columns:minmax(0,1fr);min-height:0}
 .lcard.noimg hr{margin-top:1rem}
-.lcard .ph{overflow:hidden;background:#fff;border-right:1px solid var(--rule)}
-.lcard .ph img{width:100%;height:100%;object-fit:cover;object-position:top}
+.lcard .ph{position:relative;overflow:hidden;background:#fff;border-right:1px solid var(--rule)}
+.lcard .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.lcard:not(.noimg){height:21.5rem}
 .lcard .tx{display:flex;flex-direction:column;padding:2.2rem 1.8rem 1.4rem;min-width:0}
 .lcard .tx .stats{margin-top:0}
 .lcard.noimg .tx{padding:2.4rem 1.8rem 1.4rem}
@@ -352,6 +353,7 @@ details.other summary{cursor:pointer;font:500 .95rem var(--display);color:var(--
   .tile .veil{padding:1rem}
   .feat{grid-template-columns:minmax(0,1fr)}
   .lcard{grid-template-columns:minmax(0,1fr);min-height:0}
+  .lcard:not(.noimg){height:auto}
   .lcard .ph{aspect-ratio:4/3;border-right:0;border-bottom:1px solid var(--rule)}
   .arw{top:calc((100vw - 32px) * 11 / 32)}
 }
