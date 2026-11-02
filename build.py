@@ -297,6 +297,7 @@ details.other summary{cursor:pointer;font:500 .95rem var(--display);color:var(--
 /* Wix home: photo tiles */
 .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;margin-top:1.6rem}
 .tile{position:relative;display:block;aspect-ratio:1/1;overflow:hidden;background:#9a9a9a;color:#fff;text-decoration:none}
+.post-cover{margin:1.5rem 0 2rem}.post-cover img{display:block;width:100%;height:auto;max-height:80vh;object-fit:contain}
 .tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .tile .veil{position:absolute;inset:0;display:flex;flex-direction:column;padding:1.6rem 1.7rem 1.3rem;background:rgba(120,120,120,.55);transition:background .2s}
 .tile:hover .veil{background:rgba(70,70,70,.62)}
@@ -653,7 +654,11 @@ for i, p in enumerate(posts):
     body = (
         f'<article class="post"><div class="meta"><span>No. {p["no"]:03d}</span><time datetime="{fmt_date(p["date"])}">{p["date"]:%B} {p["date"].day}, {p["date"].year}</time>'
         f'<span class="cat {esc(p["category"].lower())}">{esc(p["category"])}</span><span>{p["minutes"]} min read</span></div>'
-        f'<h1>{esc(p["title"])}</h1><div class="prose">{prose}</div>'
+        f'<h1>{esc(p["title"])}</h1>'
+        # cover chosen in the editor and not already in the text → show it at the top of the post
+        + (f'<figure class="post-cover"><img src="{esc(p["cover"])}" alt=""></figure>'
+           if p["cover"] and p["cover"] not in p["html"] else "")
+        + f'<div class="prose">{prose}</div>'
         f'<div class="poststats">{stats(p, words=True)}</div>'
         + giscus_block()
         + f''
