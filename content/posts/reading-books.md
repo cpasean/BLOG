@@ -4,6 +4,9 @@ date: 2021-02-06
 category: Life
 cover: /images/ed78aa9da73e4edc9f38d9442c8b7a82.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/reading-books
+featured: true
+views: 73
+likes: 0
 ---
 
 We can get several perks from reading books. Stating of the best two benefits among those,

@@ -78,6 +78,50 @@
     window.__startMusic = start;
   }
 
+  /* ---------- featured slider ---------- */
+  function initSliders() {
+    document.querySelectorAll("[data-slider]").forEach(function (s) {
+      if (s.__ready) return; s.__ready = true;
+      var track = s.querySelector(".track");
+      function go(dir) {
+        var w = track.clientWidth, max = track.scrollWidth - w;
+        var x = track.scrollLeft + dir * w;
+        if (x > max + 5) x = 0; else if (x < -5) x = max;   // loop around
+        track.scrollTo({ left: x, behavior: "smooth" });
+      }
+      s.querySelector(".prev").addEventListener("click", function () { go(-1); });
+      s.querySelector(".next").addEventListener("click", function () { go(1); });
+    });
+  }
+
+  /* ---------- live view counts (Wix views + GoatCounter visits) ---------- */
+  var gcMeta = document.querySelector('meta[name="gc"]');
+  var gc = gcMeta && gcMeta.content;
+  var viewCache = {};
+  function initViews() {
+    if (!gc) return;
+    document.querySelectorAll(".vc[data-slug]").forEach(function (el) {
+      var path = "/post/" + el.getAttribute("data-slug") + "/";
+      var base = +el.getAttribute("data-base") || 0;
+      var p = viewCache[path] || (viewCache[path] = fetch("https://" + gc + ".goatcounter.com/counter/" + encodeURIComponent(path) + ".json")
+        .then(function (r) { return r.ok ? r.json() : { count: "0" }; })
+        .then(function (j) { return parseInt(String(j.count).replace(/[^0-9]/g, ""), 10) || 0; })
+        .catch(function () { return 0; }));
+      p.then(function (n) { el.textContent = String(base + n); });
+    });
+  }
+  function countVisit() {
+    if (!gc) return;
+    if (window.goatcounter && window.goatcounter.count) { window.goatcounter.count({ path: location.pathname }); return; }
+    if (document.querySelector('script[data-goatcounter]')) return;
+    var s = document.createElement("script");
+    s.async = true; s.src = "https://gc.zgo.at/count.js";
+    s.setAttribute("data-goatcounter", "https://" + gc + ".goatcounter.com/count");
+    document.head.appendChild(s);
+  }
+  initSliders(); initViews(); countVisit();
+  document.addEventListener("page:changed", function () { initSliders(); initViews(); countVisit(); });
+
   /* ---------- page changes without reload ---------- */
   var main = document.querySelector("main");
   if (!main || !window.fetch || !window.history.pushState) return;
@@ -93,7 +137,8 @@
   function runScripts(scope) {
     scope.querySelectorAll("script").forEach(function (old) {
       var s = document.createElement("script");
-      if (old.src) s.src = old.src; else s.textContent = old.textContent;
+      for (var i = 0; i < old.attributes.length; i++) s.setAttribute(old.attributes[i].name, old.attributes[i].value);
+      if (!old.src) s.textContent = old.textContent;
       old.replaceWith(s);
     });
   }

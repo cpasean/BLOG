@@ -4,6 +4,9 @@ date: 2024-01-15
 category: Work
 cover: /images/b861b87f371b44eb96a64bc83b3bbe67.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/algorithmic-trading-buy-order
+featured: true
+views: 46
+likes: 0
 ---
 
 ![](/images/b861b87f371b44eb96a64bc83b3bbe67.png)

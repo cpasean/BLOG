@@ -68,11 +68,23 @@ for f in sorted((ROOT / "content/posts").glob("*.md")):
         "excerpt": (excerpt[:180] + "…") if len(excerpt) > 180 else excerpt,
         "minutes": max(1, round(len(words) / 220)),
         "words": len(words),
+        "featured": bool(meta.get("featured")),
+        "views": int(meta.get("views") or 0),
+        "likes": int(meta.get("likes") or 0),
     })
 
 posts.sort(key=lambda p: p["date"], reverse=True)
 for i, p in enumerate(posts):
     p["no"] = len(posts) - i  # ledger entry number, oldest = 1
+
+# comment counts (written by the deploy workflow from GitHub Discussions; missing file = 0)
+try:
+    import json as _json
+    COMMENTS = _json.loads((ROOT / "data/comments.json").read_text(encoding="utf-8"))
+except Exception:
+    COMMENTS = {}
+for p in posts:
+    p["comments"] = int(COMMENTS.get(p["slug"], 0))
 
 about_meta, about_body = load(ROOT / "content/about.md")
 
@@ -285,6 +297,65 @@ details.other summary{cursor:pointer;font:500 .95rem var(--display);color:var(--
 .music .frame{width:min(352px,calc(100vw - 32px));border-radius:12px;overflow:hidden;box-shadow:0 8px 24px color-mix(in srgb,var(--ink) 25%,transparent)}
 .music iframe{display:block;width:100%;height:80px;border:0}
 .music .frame[hidden]{display:block!important;position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
+/* Wix home: photo tiles */
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;margin-top:1.6rem}
+.tile{position:relative;display:block;aspect-ratio:1/1;overflow:hidden;background:#9a9a9a;color:#fff;text-decoration:none}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tile .veil{position:absolute;inset:0;display:flex;flex-direction:column;padding:1.6rem 1.7rem 1.3rem;background:rgba(120,120,120,.55);transition:background .2s}
+.tile:hover .veil{background:rgba(70,70,70,.62)}
+.tile .by{font:400 .78rem/1.4 var(--display)}
+.tile .by span{opacity:.9}
+.tile h3{margin:auto 0 .9rem;font:500 clamp(1.15rem,2vw,1.55rem)/1.2 var(--display);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tile hr,.feat hr,.lcard hr{border:0;border-top:1px solid currentColor;opacity:.45;margin:0 0 .8rem;width:100%}
+.stats{display:flex;align-items:center;gap:1.1rem;font:400 .82rem/1 var(--display)}
+.stats>span{display:inline-flex;align-items:center;gap:.35rem}
+.stats svg{width:17px;height:17px}
+.stats .hrt{margin-left:auto;color:#E8455B}
+.stats .hrt b{font-weight:400;color:currentColor}
+/* featured slider + sea videos */
+.feat{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:.4rem;margin-top:2rem;align-items:start}
+.slider{position:relative;border:1px solid var(--ink);overflow:hidden}
+.slider .track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.slider .track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:start;min-width:0}
+.slide a{display:block;color:var(--ink);text-decoration:none}
+.slide .ph{aspect-ratio:16/11;background:var(--sheet);overflow:hidden}
+.slide .ph img{width:100%;height:100%;object-fit:contain;background:#fff}
+.slide .tx{padding:1.4rem 1.6rem 1.3rem}
+.dl{margin:0 0 .6rem;font:400 .8rem/1.3 var(--display);color:var(--muted)}
+.slide h3,.lcard h3{margin:0 0 .6rem;font:600 1.35rem/1.25 var(--display);text-wrap:balance}
+.slide .ex,.lcard .ex{margin:0 0 1.3rem;font:400 .92rem/1.55 var(--display);color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.arw{position:absolute;top:calc((100% - 13rem) / 2);transform:translateY(-50%);width:2.6rem;height:3.4rem;border:0;background:transparent;color:#2B4CC9;font:300 3.2rem/1 var(--body);cursor:pointer}
+.arw.prev{left:.4rem}.arw.next{right:.4rem}
+.arw:hover{color:var(--plum)}
+.fr{min-width:0}
+.clips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.4rem}
+.clips video{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#000}
+.sea{text-align:center;padding:1rem .8rem 0;font:400 1.02rem/1.75 var(--display)}
+.sea p{margin:0 0 1rem}
+/* TRAIN OF THOUGHT / Journal cards */
+.tot-h{margin:0;font:400 1.35rem/1.2 var(--display);letter-spacing:.42em}
+.cardlist{list-style:none;margin:2rem 0 0;padding:0;display:grid;gap:2rem}
+.lcard{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border:1px solid var(--ink);color:var(--ink);text-decoration:none;min-height:21rem;transition:box-shadow .15s}
+.lcard:hover{box-shadow:0 6px 18px color-mix(in srgb,var(--ink) 15%,transparent)}
+.lcard.noimg{grid-template-columns:minmax(0,1fr)}
+.lcard .ph{overflow:hidden;background:#fff;border-right:1px solid var(--rule)}
+.lcard .ph img{width:100%;height:100%;object-fit:cover;object-position:top}
+.lcard .tx{display:flex;flex-direction:column;padding:2.2rem 1.8rem 1.4rem;min-width:0}
+.lcard .tx .stats{margin-top:0}
+.lcard.noimg .tx{padding:2.4rem 1.8rem 1.4rem}
+.lcard hr{margin-top:auto}
+.lcard .tx .stats,.slide .stats{color:var(--ink)}
+@media (max-width:760px){
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tile .veil{padding:1rem}
+  .feat{grid-template-columns:minmax(0,1fr)}
+  .lcard{grid-template-columns:minmax(0,1fr);min-height:0}
+  .lcard .ph{aspect-ratio:4/3;border-right:0;border-bottom:1px solid var(--rule)}
+  .arw{top:calc((100vw - 32px) * 11 / 32)}
+}
+.poststats{margin-top:2.5rem;padding-top:1rem;border-top:1px solid var(--rule)}
+.comments{margin-top:3rem}
 /* footer */
 .foot{margin-top:4rem;border-top:3px double var(--rule-strong);padding-block:1.4rem 2.4rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem 2rem;
   font:400 .82rem/1.6 var(--mono);color:var(--muted)}
@@ -327,6 +398,18 @@ KATEX = ('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1
          'onload="renderMathInElement(document.querySelector(\'.prose\'),{delimiters:[{left:\'$$\',right:\'$$\',display:true},{left:\'\\\\(\',right:\'\\\\)\',display:false}]})"></script>')
 
 
+def giscus_block():
+    """Comments under each post (GitHub Discussions via giscus) — on once site.yml has the giscus ids."""
+    if not (SITE.get("giscus_repo_id") and SITE.get("giscus_category_id")):
+        return ""
+    return ('<section class="comments" id="comments"><h2 class="eyebrow">Comments</h2>'
+            '<script src="https://giscus.app/client.js" data-repo="cpasean/BLOG" '
+            f'data-repo-id="{esc(SITE["giscus_repo_id"])}" data-category="{esc(SITE.get("giscus_category", "Comments"))}" '
+            f'data-category-id="{esc(SITE["giscus_category_id"])}" data-mapping="pathname" data-strict="1" '
+            'data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" '
+            'data-lang="en" data-loading="lazy" crossorigin="anonymous" async></script></section>')
+
+
 def music_widget():
     """Background music like the Wix player. Behaviour lives in static/site.js (Spotify iFrame API)."""
     track = SITE.get("music_spotify_track")
@@ -357,6 +440,7 @@ def page(*, root, title, body, current="", desc=None, canonical="", image="", ma
         f'<meta property="og:type" content="{"article" if canonical.startswith("post/") else "website"}">'
         + (f'<meta property="og:image" content="{esc(og_img)}">' if og_img else "")
         + f'<link rel="alternate" type="application/rss+xml" title="{esc(SITE["title"])}" href="{root}feed.xml">'
+        + (f'<meta name="gc" content="{esc(SITE["goatcounter"])}">' if SITE.get("goatcounter") else "")
         + FONTS + (KATEX if math else "")
         + f"<style>{CSS}{HL_CSS if '<div class=\"hl\"' in body else ''}</style>"
     )
@@ -420,6 +504,55 @@ def subscribe_form(key):
             '<button type="submit">Subscribe</button>'
             '<small>New posts arrive in your inbox. Unsubscribe anytime.</small></form>')
 
+
+ICON_EYE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 12S5.5 5 12 5s10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>'
+ICON_CMT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v12H8l-4 4V4Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>'
+ICON_HRT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9.3-9.2C1.4 7.4 3.6 4 7 4c2 0 3.5 1.1 5 3 1.5-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8C19.5 15.4 12 20 12 20Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>'
+
+
+def date_line(p):
+    return f'{p["date"]:%b} {p["date"].day}, {p["date"].year} · {p["minutes"]} min read'
+
+
+def stats(p, words=False):
+    v, c = p["views"], p["comments"]
+    if words:
+        return (f'<div class="stats"><span><span class="vc" data-slug="{esc(p["slug"])}" data-base="{v}">{v}</span> views</span>'
+                f'<span>{c} comments</span><span class="hrt" title="{p["likes"]} likes">{ICON_HRT}<b>{p["likes"] or ""}</b></span></div>')
+    return (f'<div class="stats"><span>{ICON_EYE}<span class="vc" data-slug="{esc(p["slug"])}" data-base="{v}">{v}</span></span>'
+            f'<span>{ICON_CMT}{c}</span><span class="hrt" title="{p["likes"]} likes">{ICON_HRT}<b>{p["likes"] or ""}</b></span></div>')
+
+
+def photo_card(p, root):
+    """Wix-style tile: photo fills the square, text over a grey veil."""
+    img = f'<img src="{esc(p["cover"])}" alt="" loading="lazy">' if p["cover"] else ""
+    return (f'<a class="tile" href="{href(root, "post/" + p["slug"] + "/")}">{img}<div class="veil">'
+            f'<div class="by">{esc(SITE["author"])}<br><span>{date_line(p)}</span></div>'
+            f'<h3>{esc(p["title"])}</h3><hr>{stats(p)}</div></a>')
+
+
+def list_card(p, root):
+    """TRAIN OF THOUGHT card: photo left (when the post has one), text right."""
+    img = (f'<div class="ph"><img src="{esc(p["cover"])}" alt="" loading="lazy"></div>' if p["cover"] else "")
+    return (f'<li data-cat="{esc(p["category"].lower())}"><a class="lcard{" noimg" if not p["cover"] else ""}" href="{href(root, "post/" + p["slug"] + "/")}">{img}'
+            f'<div class="tx"><p class="dl">{date_line(p)}</p><h3>{esc(p["title"])}</h3>'
+            f'<p class="ex">{esc(p["excerpt"])}</p><hr>{stats(p, words=True)}</div></a></li>')
+
+
+def card_list(items, root):
+    return '<ol class="cardlist">' + "".join(list_card(p, root) for p in items) + "</ol>"
+
+
+def featured_slider(items, root):
+    slides = "".join(
+        f'<article class="slide"><a href="{href(root, "post/" + p["slug"] + "/")}">'
+        + (f'<div class="ph"><img src="{esc(p["cover"])}" alt="" loading="lazy"></div>' if p["cover"] else '<div class="ph"></div>')
+        + f'<div class="tx"><p class="dl">{date_line(p)}</p><h3>{esc(p["title"])}</h3><p class="ex">{esc(p["excerpt"])}</p><hr>{stats(p)}</div></a></article>'
+        for p in items)
+    return ('<div class="slider" data-slider><div class="track">' + slides + '</div>'
+            '<button type="button" class="arw prev" aria-label="Previous featured post">&#8249;</button>'
+            '<button type="button" class="arw next" aria-label="Next featured post">&#8250;</button></div>')
+
 # home — section order restored from the Wix home page
 motto = "".join(f"<span>{esc(m)}</span>" for m in SITE["motto"])
 pick = next((p for p in posts if p["slug"] == SITE.get("my_pick")), None)
@@ -428,6 +561,7 @@ if pick and not pick_text:
     pick_text = re.sub(r"<[^>]+>", "\n", pick["html"])
     pick_text = re.sub(r"\n\s*\n+", "\n", html.unescape(pick_text)).strip()
 intro = "".join(f"<p>{esc(x.strip())}</p>" for x in SITE.get("intro", "").split("\n\n") if x.strip())
+featured = [p for p in posts if p["featured"]] or posts[:8]
 home = (
     '<section class="split bleed" aria-label="Welcome">'
     '<div class="photo" style="background-image:url(/images/bg-wheat.jpg)" role="img" aria-label="Wheat field at sunset"></div>'
@@ -435,13 +569,19 @@ home = (
     f'<a href="{href("", "journal/")}#life">Life &amp; Thoughts</a>'
     f'<a href="{href("", "about/")}">About</a>'
     f'<a href="{href("", "journal/")}#work">Financial Freedom</a></nav></div></section>'
-    f'<section class="blush bleed"><div class="in">{intro}<p class="sig">From the bottom of my heart,</p>'
+    '<section class="tiles" aria-label="Latest posts">' + "".join(photo_card(p, "") for p in posts[:6]) + '</section>'
+    '<section class="feat"><div class="fl">' + featured_slider(featured, "") + '</div>'
+    '<div class="fr"><div class="clips">'
+    '<video src="/images/sea-sunset.mp4" poster="/images/sea-sunset.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Sunset over the sea"></video>'
+    '<video src="/images/coffee.mp4" poster="/images/coffee.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Espresso pouring into a cup"></video></div>'
+    f'<div class="sea">{intro}</div></div></section>'
+    '<section class="blush bleed"><div class="in"><p class="sig">From the bottom of my heart,</p>'
     + (subscribe_form("band") or f'<div class="follow"><a class="btn solid" href="{href("", "subscribe/")}">Subscribe</a></div>')
     + '</div></section>'
     '<div class="band thin fixed bleed" style="background-image:url(/images/bg-handwriting.jpg)" role="img" aria-label="Handwritten I CHOOSE"></div>'
     '<section class="tot"><div>'
-    f'<div class="sect" style="margin-top:0"><h2 class="eyebrow" style="margin:0">Train of thought</h2><a href="{href("", "journal/")}">All {len(posts)} entries →</a></div>'
-    + ledger_rows(posts[:14], "")
+    f'<div class="sect" style="margin-top:0"><h2 class="eyebrow tot-h">Train of thought</h2><a href="{href("", "journal/")}">All {len(posts)} entries →</a></div>'
+    + card_list(posts[:8], "")
     + '</div><aside>'
     '<div class="side"><h2 class="eyebrow">About me</h2>'
     f'<a href="{esc(SITE["instagram_personal"])}" target="_blank" rel="noopener"><img src="/images/about-collage.jpg" alt="Photos of Sean Yeon" width="246" height="246" loading="lazy"></a>'
@@ -476,8 +616,8 @@ journal = (
     '<div class="filters" role="group" aria-label="Filter by category">'
     '<button type="button" id="f-all" data-f="all" aria-pressed="true">All</button>'
     + "".join(f'<button type="button" id="f-{c.lower()}" data-f="{c.lower()}" aria-pressed="false">{c} · {counts[c]}</button>' for c in SITE["categories"])
-    + "</div>" + ledger_rows(posts, "../")
-    + """<script>(function(){var b=[].slice.call(document.querySelectorAll('.filters button')),r=[].slice.call(document.querySelectorAll('.ledger li'));
+    + "</div>" + card_list(posts, "../")
+    + """<script>(function(){var b=[].slice.call(document.querySelectorAll('.filters button')),r=[].slice.call(document.querySelectorAll('.cardlist li'));
 function set(f){b.forEach(function(x){x.setAttribute('aria-pressed',String(x.dataset.f===f))});r.forEach(function(li){li.hidden=f!=='all'&&li.dataset.cat!==f})}
 b.forEach(function(x){x.addEventListener('click',function(){set(x.dataset.f);history.replaceState(null,'',x.dataset.f==='all'?location.pathname:'#'+x.dataset.f)})});
 function fromHash(){var h=location.hash.slice(1);set(b.some(function(x){return x.dataset.f===h})?h:'all')}window.addEventListener('hashchange',fromHash);fromHash()})();</script>"""
@@ -501,6 +641,9 @@ for i, p in enumerate(posts):
         f'<article class="post"><div class="meta"><span>No. {p["no"]:03d}</span><time datetime="{fmt_date(p["date"])}">{p["date"]:%B} {p["date"].day}, {p["date"].year}</time>'
         f'<span class="cat {esc(p["category"].lower())}">{esc(p["category"])}</span><span>{p["minutes"]} min read</span></div>'
         f'<h1>{esc(p["title"])}</h1><div class="prose">{prose}</div>'
+        f'<div class="poststats">{stats(p, words=True)}</div>'
+        + giscus_block()
+        + f''
         f'<p class="legacy">Originally published on Wix, {p["date"].strftime("%B %Y")}.</p>{pager}</article>'
     )
     write(f"post/{p['slug']}/index.html", page(

@@ -4,6 +4,9 @@ date: 2021-12-15
 category: Work
 cover: /images/9c6dde7f088b400fb7242a8d998bcbb4.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/elon-s-tweet-vs-tesla-price-change
+featured: true
+views: 179
+likes: 0
 ---
 
 ![](/images/9c6dde7f088b400fb7242a8d998bcbb4.png)![](/images/1c9457178d4b4f68af45dca96cb3518b.png)

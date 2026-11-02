@@ -4,6 +4,9 @@ date: 2021-01-28
 category: Work
 cover: /images/23855e6c56704194bb9f55153efddcad.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/where-s-my-refund
+featured: true
+views: 48
+likes: 0
 ---
 
 Checking the IRS annual tax refund status is very simple and easy. First of all, there are two ways to report annual taxes. One way is to submit it to the IRS system through the federal government website called e-filing. The other one is called paper filing, wherein you have to send the original documents to the appropriate address.

@@ -4,6 +4,9 @@ date: 2021-01-10
 category: Work
 cover: /images/2c7f009c109949689ea7b058d28b13cc.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/form-8822-change-of-address
+featured: true
+views: 50
+likes: 0
 ---
 
 Refund checks sent by IRS or state government can get lost and, in the worst case, can be cashed out by someone else even though they are electronically filed and selected the option to directly deposit it to a bank account if it is not the most recent tax refund, such as refunds in 2018, 2017, or 2016.

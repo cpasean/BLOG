@@ -4,6 +4,9 @@ date: 2020-12-25
 category: Life
 cover: /images/71a4e990076e44ce838125f9821fc7c6.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/art-of-getting-complete-flow-avatar
+featured: true
+views: 40
+likes: 0
 ---
 
 When we get to work and do a job that requires a few hours of complete focus, what tools could help us improve our resistance and eventually complete complex tasks? Of all the tools I've tried, wearing an earplug really works and I stick to this method every time I make a computer program or do self-study unless I have to respond through sound.

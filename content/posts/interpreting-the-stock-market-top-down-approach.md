@@ -4,6 +4,9 @@ date: 2023-02-07
 category: Work
 cover: /images/0e231014c5f84a1496d6938a0120dee4.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/interpreting-the-stock-market-top-down-approach
+featured: true
+views: 19
+likes: 0
 ---
 
 ![](/images/0e231014c5f84a1496d6938a0120dee4.png)

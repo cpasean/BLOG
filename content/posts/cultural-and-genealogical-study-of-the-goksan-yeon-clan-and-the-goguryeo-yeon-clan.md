@@ -3,6 +3,9 @@ title: "Cultural and Genealogical Study of the Goksan Yeon Clan and the Goguryeo
 date: 2025-10-13
 category: Life
 legacy_url: https://aicpasean.wixsite.com/mysite/post/cultural-and-genealogical-study-of-the-goksan-yeon-clan-and-the-goguryeo-yeon-clan
+featured: true
+views: 4
+likes: 0
 ---
 
 **Author:** Yeon, Gwang-heum (延光欽)

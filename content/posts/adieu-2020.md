@@ -4,6 +4,9 @@ date: 2020-12-17
 category: Life
 cover: /images/ed7ca215a0564807a72620b3839107f4.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/adieu-2020
+featured: true
+views: 22
+likes: 0
 ---
 
 We are now heading towards the end of the year. The pandemic has held me back from going out of the country since the beginning of this year after I finally passed my CPA exam.

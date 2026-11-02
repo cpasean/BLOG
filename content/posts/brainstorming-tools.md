@@ -4,6 +4,9 @@ date: 2023-02-07
 category: Life
 cover: /images/00e138b5d75948e6bd3a72582b075d85.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/brainstorming-tools
+featured: true
+views: 18
+likes: 0
 ---
 
 ![](/images/00e138b5d75948e6bd3a72582b075d85.png)

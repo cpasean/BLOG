@@ -4,6 +4,9 @@ date: 2020-12-29
 category: Life
 cover: /images/a1c70c5b04cf4f4fbc6e942d1b5c7c23.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/miracle-morning-part-i
+featured: true
+views: 101
+likes: 0
 ---
 
 Waking up early used to be a lifelong challenge. Because I am really happy when I read a book or plan a day at a cafe early in the morning before I kick work off. I know that writing in a diary book makes me happy. My happiness triples when my routine is done early in the morning.

@@ -4,6 +4,9 @@ date: 2023-02-07
 category: Work
 cover: /images/8f8d4881ba874936aca436cbe8b0fb50.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/chatgpt-into-python-plus-voice-recognition
+featured: true
+views: 25
+likes: 1
 ---
 
 ![](/images/8f8d4881ba874936aca436cbe8b0fb50.png)

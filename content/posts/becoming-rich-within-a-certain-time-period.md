@@ -4,6 +4,9 @@ date: 2020-12-14
 category: Life
 cover: /images/967f118ab22f4f42aa66b1810b636504.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/becoming-rich-within-a-certain-time-period
+featured: true
+views: 84
+likes: 0
 ---
 
 When it comes to becoming rich within a certain time period, is it always better to work full-time than part-time? If the ball is in my court, I would rather be a part-timer for that goal unless the full-time workers get paid far more than a part-timer because being a part-timer has several perks.

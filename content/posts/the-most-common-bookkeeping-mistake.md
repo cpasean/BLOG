@@ -4,6 +4,9 @@ date: 2020-12-15
 category: Work
 cover: /images/91fa0c0e1fac491ba444510d3eca7393.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/the-most-common-bookkeeping-mistake
+featured: false
+views: 62
+likes: 0
 ---
 
 The most common bookkeeping mistake in automobile lease is when a company elects an accounting policy as a financial lease rather than an operating lease.

@@ -4,6 +4,9 @@ date: 2021-01-01
 category: Life
 cover: /images/8c1ff2e3732a45d8abebd4be16438982.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/miracle-morning-part-ii
+featured: true
+views: 90
+likes: 0
 ---
 
 As I figured out, the effective ways to relax and ease your mind at night before going to bed are as follows:

@@ -4,6 +4,9 @@ date: 2022-08-24
 category: Work
 cover: /images/4ccb7684ed314a7881d7926ccb0484fd.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/blue-chip-stocks-by-big-data
+featured: true
+views: 59
+likes: 1
 ---
 
 ![](/images/4ccb7684ed314a7881d7926ccb0484fd.png)

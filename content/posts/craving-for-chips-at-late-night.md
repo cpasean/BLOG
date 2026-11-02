@@ -4,6 +4,9 @@ date: 2020-12-10
 category: Life
 cover: /images/8c18b79f86f04bd49db0c5709ddc4399.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/craving-for-chips-at-late-night
+featured: true
+views: 32
+likes: 0
 ---
 
 When I crave for chips at night before going to bed, I easily pick one out of the snack basket and finish the whole pack. When I wake up the next morning, I feel more tired because my organs continue to work during the night to digest the food.

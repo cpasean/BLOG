@@ -4,6 +4,9 @@ date: 2021-04-08
 category: Life
 cover: /images/3e87b061976940e8a408427580222937.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/beginning-of-being-a-rich-person
+featured: true
+views: 42
+likes: 0
 ---
 
 The beginning of being a rich person comes from the belief that we can become such a person. We may hate some rich people but not their wealth. It's not always true that having such a belief can make someone rich, all the same being distrustful won't either. I believe that kind of mindset can make us rich.

@@ -4,6 +4,9 @@ date: 2020-12-10
 category: Work
 cover: /images/4c1d61ec4c7544ca8a44fb054500cb42.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/learning-data-science
+featured: false
+views: 25
+likes: 0
 ---
 
 Learning data science is interesting. Yesterday, I started an online lesson about R for beginners, which is another programming language that I have not tried before.

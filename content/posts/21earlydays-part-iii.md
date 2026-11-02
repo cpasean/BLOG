@@ -4,6 +4,9 @@ date: 2021-01-10
 category: Life
 cover: /images/62a8486b96d64cf38b45e589768ce733.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/21earlydays-part-iii
+featured: false
+views: 18
+likes: 0
 ---
 
 There are two tools that really help me wake up early in the morning right away without any hesitation.

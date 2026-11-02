@@ -4,6 +4,9 @@ date: 2020-12-22
 category: Work
 cover: /images/8be30ae3c7c64f78b1ad02441085b512.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/reminder-shell-startup
+featured: false
+views: 39
+likes: 0
 ---
 
 There are many tools that remind us of our plans and goals on our desktop or mobile devices.

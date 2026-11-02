@@ -4,6 +4,9 @@ date: 2021-02-18
 category: Life
 cover: /images/c1b71f716d6c44eb9960e68dc16c468f.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/influencers
+featured: true
+views: 37
+likes: 0
 ---
 
 According to saying, we come across three important people who significantly influence our fate. In fact, there's always been a genuine advisor who plays an important role in every successful person in history. It is very difficult to recognize them in the first place because we can only judge a person after quite some time. At first, we may doubt, over-trust, think ill of, or even kick them out even though they may eventually be the right person brought us by our guardian angel as an answer to years of prayers at that very moment.

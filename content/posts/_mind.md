@@ -4,6 +4,9 @@ date: 2021-03-16
 category: Life
 cover: /images/2c8f8c5d90d6406eba326d2eccf7b376.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/_mind
+featured: true
+views: 37
+likes: 0
 ---
 
 People's minds are expressed by language. We can touch or change others with the language of the pure spirit. As long as people sincerely share their hearts, notions such as a theory or logic are just ostensibly added. We don't just admire good announcers or people having a strong sense of their word.

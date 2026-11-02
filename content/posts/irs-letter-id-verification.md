@@ -4,6 +4,9 @@ date: 2021-03-31
 category: Work
 cover: /images/a10c7f51f30749dd846fa928e51a1913.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/irs-letter-id-verification
+featured: false
+views: 569
+likes: 0
 ---
 
 You may receive a letter from IRS asking for your ID verification **- 5071C** letter, **5747C** letter, **6331C** letter, or **5447C** letter. It is more likely than not that IRS, which processes the federal taxes, sends the letter to the first-time filers. Don't panic. It merely means IRS has successfully reviewed your annual tax return. In most cases, it also means that IRS is ready to issue your refund check. To simply put, you may be one of those first-filers.

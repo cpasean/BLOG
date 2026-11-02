@@ -4,6 +4,9 @@ date: 2021-06-01
 category: Work
 cover: /images/2e09d5bc85b34edba90e277d7cedb350.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/get-double-deduction-with-itin
+featured: true
+views: 42
+likes: 0
 ---
 
 Are you keen to file your annual tax return as the status of MFJ(married filing jointly), but your spouse or offspring does not have SSN? The benefit difference between Single and MFJ is significant because you can ***get double in the standard deduction*** amount, child care benefits, AOTC(American opportunity tax credit), and so forth.

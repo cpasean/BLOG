@@ -4,6 +4,9 @@ date: 2021-01-19
 category: Life
 cover: /images/247b38f1425a4a52b28bc87c58d06333.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/we-all-love-a-smile-on-our-faces
+featured: false
+views: 57
+likes: 0
 ---
 
 There are many ways to relieve our stress and, after all, maintain a positive mindset as always. For example, I used to be with a small stone in my right pocket almost every day. It reminded me of resetting my mind to be positive once I unconsciously touched the stone during a day as if we are re-motivated when we look at the quote posted on the bulletin board. However, I used to feel nervous and unprepared whenever I missed the ritual, which means that the stone was not just ordinary but had already developed to a certain level of spirituality.

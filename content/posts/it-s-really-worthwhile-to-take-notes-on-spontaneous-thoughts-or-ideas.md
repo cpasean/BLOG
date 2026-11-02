@@ -4,6 +4,9 @@ date: 2020-12-17
 category: Life
 cover: /images/c6a8eeb7a7ed492f908d8c75c8b8c8b5.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/it-s-really-worthwhile-to-take-notes-on-spontaneous-thoughts-or-ideas
+featured: true
+views: 71
+likes: 0
 ---
 
 It's really worthwhile to take notes on spontaneous thoughts or ideas.

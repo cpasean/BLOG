@@ -4,6 +4,9 @@ date: 2020-12-10
 category: Life
 cover: /images/8dea2165e3574ba3a2bb41e700d1b2e3.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/the-importance-of-keeping-a-routine-for-the-long-term-goal
+featured: true
+views: 32
+likes: 0
 ---
 
 Every moment is a part of my life, and in the end, the accumulation becomes a story of a completed life, so I must feel happy even at the moment of doing a boring or rather routine job.

@@ -11,7 +11,7 @@ content:
     format: yaml-frontmatter
     filename: "{title}.md"
     view:
-      fields: [title, date, category]
+      fields: [title, date, category, featured]
       primary: title
       sort: [date, title]
       default:
@@ -34,6 +34,10 @@ content:
         default: Life
         options:
           values: [Work, Life]
+      - name: featured
+        label: Featured — 체크하면 홈 화면 추천 글(사진 슬라이드)에 표시
+        type: boolean
+        default: false
       - name: draft
         label: Draft — 체크하면 공개하지 않음
         type: boolean
@@ -45,6 +49,14 @@ content:
         label: Math formulas (수식 사용)
         type: boolean
         default: false
+      - name: views
+        label: Views carried over from Wix
+        type: number
+        hidden: true
+      - name: likes
+        label: Likes carried over from Wix
+        type: number
+        hidden: true
       - name: legacy_url
         label: Old Wix URL
         type: string
