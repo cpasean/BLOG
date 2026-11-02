@@ -523,9 +523,9 @@ def stats(p, words=False):
     c = p["comments"]
     if words:
         return (f'<div class="stats"><span><span class="vc" data-slug="{esc(p["slug"])}" data-base="{v}">{v}</span> views</span>'
-                f'<span>{c} comments</span><span class="hrt">{ICON_HRT}</span></div>')
+                f'<span>{c} comments</span><span class="hrt" title="{p["likes"]} likes">{ICON_HRT}<b>{(p["likes"] or "") if SITE.get("views_include_wix") else ""}</b></span></div>')
     return (f'<div class="stats"><span>{ICON_EYE}<span class="vc" data-slug="{esc(p["slug"])}" data-base="{v}">{v}</span></span>'
-            f'<span>{ICON_CMT}{c}</span><span class="hrt">{ICON_HRT}</span></div>')
+            f'<span>{ICON_CMT}{c}</span><span class="hrt" title="{p["likes"]} likes">{ICON_HRT}<b>{(p["likes"] or "") if SITE.get("views_include_wix") else ""}</b></span></div>')
 
 
 def photo_card(p, root):

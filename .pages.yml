@@ -50,11 +50,11 @@ content:
         type: boolean
         default: false
       - name: views
-        label: Views on Wix (기록용)
+        label: Views carried over from Wix
         type: number
         hidden: true
       - name: likes
-        label: Likes on Wix (기록용)
+        label: Likes carried over from Wix
         type: number
         hidden: true
       - name: legacy_url
