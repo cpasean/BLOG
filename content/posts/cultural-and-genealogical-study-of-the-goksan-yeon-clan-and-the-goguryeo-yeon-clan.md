@@ -1,13 +1,16 @@
 ---
-title: "Cultural and Genealogical Study of the Goksan Yeon Clan and the Goguryeo Yeon Clan"
+title: Cultural and Genealogical Study of the Goksan Yeon Clan and the Goguryeo
+  Yeon Clan
 date: 2025-10-13
 category: Life
-legacy_url: https://aicpasean.wixsite.com/mysite/post/cultural-and-genealogical-study-of-the-goksan-yeon-clan-and-the-goguryeo-yeon-clan
 featured: true
+draft: false
+cover: /images/20261101_215546.png
+math: false
 views: 4
 likes: 0
+legacy_url: https://aicpasean.wixsite.com/mysite/post/cultural-and-genealogical-study-of-the-goksan-yeon-clan-and-the-goguryeo-yeon-clan
 ---
-
 **Author:** Yeon, Gwang-heum (延光欽)
 
 ### Ⅰ. Introduction
@@ -34,11 +37,13 @@ The surname *Yeon (淵)* was one of the most prestigious names among Goguryeo’
 
 ### Ⅴ. Probability Analysis
 
+
 | Aspect | Assessment | Basis |
-| --- | --- | --- |
+| -------------------------------- | ---------------- | -------------------------------------------------------------- |
 | Direct bloodline linkage | Low (~5%) | Lack of documented lineage |
 | Cultural & linguistic continuity | High (~70%) | Shared sound, meaning, geography, and elite continuity |
 | Legitimacy of pride | Very high (~90%) | Symbolic succession of Goguryeo’s independent and loyal spirit |
+
 
 Thus, although a **direct genealogical proof** is missing, the **cultural and symbolic heritage** between the Goksan Yeon clan and Yeon Gaesomun’s Goguryeo clan is strong enough to justify historical pride.
 
