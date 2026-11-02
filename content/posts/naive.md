@@ -1,6 +1,6 @@
 ---
 title: "'naive'"
-date: 2021-12-27
+date: 2021-12-27T13:56:02Z
 category: Life
 cover: /images/e877e4e00dad4973af68b8cffe29112c.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/naive

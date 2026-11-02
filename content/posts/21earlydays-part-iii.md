@@ -1,6 +1,6 @@
 ---
 title: "#21earlydays - Part III"
-date: 2021-01-10
+date: 2021-01-10T12:00:01Z
 category: Life
 cover: /images/62a8486b96d64cf38b45e589768ce733.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/21earlydays-part-iii

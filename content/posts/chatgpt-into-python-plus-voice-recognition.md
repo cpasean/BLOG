@@ -1,6 +1,6 @@
 ---
 title: "ChatGPT into Python, Plus Voice Recognition"
-date: 2023-02-07
+date: 2023-02-07T16:08:25Z
 category: Work
 cover: /images/8f8d4881ba874936aca436cbe8b0fb50.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/chatgpt-into-python-plus-voice-recognition

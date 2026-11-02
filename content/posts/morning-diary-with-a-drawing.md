@@ -1,6 +1,6 @@
 ---
 title: "Morning diary with a drawing"
-date: 2025-02-08
+date: 2025-02-08T22:02:08Z
 category: Life
 cover: /images/a65bee1b4dc84e3b9bd302c68f6684ec.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/morning-diary-with-a-drawing

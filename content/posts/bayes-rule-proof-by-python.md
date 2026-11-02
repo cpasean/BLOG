@@ -1,6 +1,6 @@
 ---
 title: "Bayes Rule: proof by Python"
-date: 2025-02-08
+date: 2025-02-08T22:08:23Z
 category: Work
 cover: /images/0da10d4eb0774685a3d8c830f935a5e8.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/bayes-rule-proof-by-python

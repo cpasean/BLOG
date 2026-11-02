@@ -1,6 +1,6 @@
 ---
 title: "Regression _ Carats vs Price"
-date: 2025-02-08
+date: 2025-02-08T22:09:56Z
 category: Work
 cover: /images/e37d8e0894794da7b168ed748b5d2fd3.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/regression-_-carats-vs-price

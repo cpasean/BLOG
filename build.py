@@ -561,7 +561,7 @@ if pick and not pick_text:
     pick_text = re.sub(r"<[^>]+>", "\n", pick["html"])
     pick_text = re.sub(r"\n\s*\n+", "\n", html.unescape(pick_text)).strip()
 intro = "".join(f"<p>{esc(x.strip())}</p>" for x in SITE.get("intro", "").split("\n\n") if x.strip())
-featured = [p for p in posts if p["featured"]] or posts[:8]
+featured = [p for p in posts if p["featured"] and p["cover"]] or [p for p in posts if p["cover"]][:8]
 home = (
     '<section class="split bleed" aria-label="Welcome">'
     '<div class="photo" style="background-image:url(/images/bg-wheat.jpg)" role="img" aria-label="Wheat field at sunset"></div>'

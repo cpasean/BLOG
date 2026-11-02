@@ -1,6 +1,6 @@
 ---
 title: "Form 8822 (Change of Address)"
-date: 2021-01-10
+date: 2021-01-10T12:00:00Z
 category: Work
 cover: /images/2c7f009c109949689ea7b058d28b13cc.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/form-8822-change-of-address

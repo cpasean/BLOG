@@ -1,6 +1,6 @@
 ---
 title: "Brainstorming Tools"
-date: 2023-02-07
+date: 2023-02-07T15:51:24Z
 category: Life
 cover: /images/00e138b5d75948e6bd3a72582b075d85.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/brainstorming-tools

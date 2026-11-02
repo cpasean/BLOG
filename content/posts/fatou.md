@@ -1,6 +1,6 @@
 ---
 title: "FATOU"
-date: 2021-02-24
+date: 2021-02-24T12:00:01Z
 category: Life
 cover: /images/034445a960dd40ccbe76778e4c37ccbe.jpg
 legacy_url: https://aicpasean.wixsite.com/mysite/post/fatou

@@ -1,6 +1,6 @@
 ---
 title: "Interpreting the stock market - Top-Down Approach"
-date: 2023-02-07
+date: 2023-02-07T15:57:28Z
 category: Work
 cover: /images/0e231014c5f84a1496d6938a0120dee4.png
 legacy_url: https://aicpasean.wixsite.com/mysite/post/interpreting-the-stock-market-top-down-approach
