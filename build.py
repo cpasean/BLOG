@@ -287,16 +287,13 @@ img{max-width:100%;height:auto}
 details.other{margin-top:2rem;border-top:1px solid var(--rule);padding-top:1rem}
 details.other summary{cursor:pointer;font:500 .95rem var(--display);color:var(--muted)}
 .music{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;display:flex;flex-direction:column;align-items:flex-end;gap:.5rem}
-.music button{display:inline-flex;align-items:center;gap:.55rem;font:500 .85rem/1 var(--display);letter-spacing:.03em;padding:.7rem 1rem;border:1px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);cursor:pointer;box-shadow:0 4px 14px color-mix(in srgb,var(--ink) 18%,transparent)}
-.music button:hover{background:var(--ink);color:var(--paper)}
-.music .eq{display:inline-flex;gap:2px;align-items:flex-end;height:12px}
-.music .eq i{width:3px;background:currentColor;height:4px}
-.music[data-playing] .eq i{animation:eq 1s ease-in-out infinite}.music .eq i:nth-child(2){animation-delay:.2s}.music .eq i:nth-child(3){animation-delay:.4s}
-@keyframes eq{50%{height:12px}}
-@media (prefers-reduced-motion:reduce){.music .eq i{animation:none!important}}
-.music .frame{width:min(352px,calc(100vw - 32px));border-radius:12px;overflow:hidden;box-shadow:0 8px 24px color-mix(in srgb,var(--ink) 25%,transparent)}
-.music iframe{display:block;width:100%;height:80px;border:0}
-.music .frame[hidden]{display:block!important;position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
+.music .mbar{display:flex;align-items:center;gap:.7rem;padding:.55rem .9rem .55rem .6rem;border:1px solid var(--ink);border-radius:999px;background:var(--paper);box-shadow:0 4px 14px color-mix(in srgb,var(--ink) 18%,transparent)}
+.music button{display:grid;place-items:center;width:2.2rem;height:2.2rem;border:0;border-radius:50%;background:var(--ink);color:var(--paper);cursor:pointer;padding:0}
+.music button svg{width:16px;height:16px}
+.music .i-pause{display:none}.music[data-playing] .i-pause{display:block}.music[data-playing] .i-play{display:none}
+.music input[type=range]{width:6.5rem;accent-color:var(--ink)}
+.music .mt{font:500 .78rem/1.2 var(--display);max-width:9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:760px){.music .mt{display:none}.music input[type=range]{width:5rem}}
 /* Wix home: photo tiles */
 .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;margin-top:1.6rem}
 .tile{position:relative;display:block;aspect-ratio:1/1;overflow:hidden;background:#9a9a9a;color:#fff;text-decoration:none}
@@ -414,14 +411,21 @@ def giscus_block():
 
 
 def music_widget():
-    """Background music like the Wix player. Behaviour lives in static/site.js (Spotify iFrame API)."""
-    track = SITE.get("music_spotify_track")
-    if not track:
+    """Wix-style music player (play/pause + volume) for an audio file uploaded in the editor."""
+    try:
+        m = yaml.safe_load((ROOT / "content/music.yml").read_text(encoding="utf-8")) or {}
+    except FileNotFoundError:
+        m = {}
+    src = (m.get("file") or "").strip()
+    if not src:
         return ""
-    label = esc(SITE.get("music_label", "Music"))
-    return (f'<div class="music" id="music" data-uri="spotify:track:{esc(track)}"><div class="frame" hidden></div>'
-            f'<button type="button" id="music-btn" aria-expanded="false" aria-label="Play music" title="{label}">'
-            '<span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span class="lbl">Music</span></button></div>')
+    label = esc(m.get("title") or "Music")
+    return (f'<div class="music" id="music" data-src="{esc(src)}">'
+            '<div class="mbar"><button type="button" id="music-btn" aria-label="Play music" title="' + label + '">'
+            '<svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg>'
+            '<svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z" fill="currentColor"/></svg></button>'
+            '<input type="range" id="music-vol" min="0" max="1" step="0.05" value="0.6" aria-label="Volume">'
+            f'<span class="mt">{label}</span></div></div>')
 
 
 def page(*, root, title, body, current="", desc=None, canonical="", image="", math=False, fragment=False):

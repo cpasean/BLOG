@@ -45,13 +45,3 @@ my_pick_text: |
 subscribe_action: https://api.follow.it/subscription-form/L3lhWkwrbHMvVkpmVHBlRG9oSVZBbFVBQTdrVWhuTWNaZXhtWjc4REVxU1V4UnZLdlE0bE9PNnF2amc5bGhvT21iZm5RVGxjMVcrOWFLRkRSS1I3b3hqOFlackZUbEMzNHZVUUt6VlFhTDhhTTM0Q1JVZlMxeHJ4Z2F6NjY3cWp8UlZra21RRG9ldE42UUFMbU84RllRVUFQU3ZuVURnWXFPT1BUVUlCRXF2az0=/8
 # follow.it 피드 소유 인증
 follow_it_verification: 8qW2m9akl6qsTy5gDbB7
-# 배경음악 (Spotify 공식 음원) — 다른 곡으로 바꾸려면 Spotify 곡 링크의 track/ 뒤 ID를 넣으세요
-music_spotify_track: 7fbCwWA3zgOgKmHupdPxmy
-music_label: "Romance — Yuhki Kuramoto (A Bittersweet Life theme)"
-# 댓글 (giscus — GitHub Discussions)
-giscus_repo_id: R_kgDOVfdEaQ
-giscus_category: Announcements
-giscus_category_id: DIC_kwDOVfdEac4DKLvs
-# 실시간 조회수 (GoatCounter: https://seanyeon.goatcounter.com)
-goatcounter: seanyeon
-views_include_wix: true    # Wix 시절 조회수에 새 사이트 방문 수를 더해 표시 (false면 새 방문만)

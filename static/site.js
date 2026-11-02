@@ -1,81 +1,55 @@
 /* Financial Doctor — site behaviour
- * 1. Background music (official Spotify player) that starts when a menu is clicked
- * 2. Page changes without reloading, so the music keeps playing (like the old Wix site)
+ * 1. Background music (audio file uploaded in the editor) with play/pause and volume, like the old Wix player
+ * 2. Page changes without reloading, so the music keeps playing
  */
 (function () {
   "use strict";
   var box = document.getElementById("music");
-  var OFF_KEY = "music-off";
-  var controller = null, wantPlay = false, playing = false;
+  var OFF_KEY = "music-off", VOL_KEY = "music-vol";
 
-  function store(get, val) {
-    try { return get ? sessionStorage.getItem(OFF_KEY) : (val ? sessionStorage.setItem(OFF_KEY, "1") : sessionStorage.removeItem(OFF_KEY)); }
-    catch (e) { return null; }
-  }
+  function sget(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
+  function sset(k, v) { try { v == null ? sessionStorage.removeItem(k) : sessionStorage.setItem(k, v); } catch (e) {} }
 
   /* ---------- music ---------- */
   if (box) {
     var btn = document.getElementById("music-btn");
-    var frame = box.querySelector(".frame");
-    var label = btn.querySelector(".lbl");
-    var uri = box.getAttribute("data-uri");
+    var vol = document.getElementById("music-vol");
+    var audio = new Audio(box.getAttribute("data-src"));
+    audio.loop = true;
+    audio.preload = "auto";
+    var v0 = parseFloat(sget(VOL_KEY));
+    if (!isNaN(v0)) vol.value = v0;
+    audio.volume = +vol.value;
 
     function setUI() {
-      box.toggleAttribute("data-open", !frame.hidden);
-      box.toggleAttribute("data-playing", playing);
-      btn.setAttribute("aria-expanded", String(!frame.hidden));
-      btn.setAttribute("aria-label", playing ? "Pause music" : "Play music");
-      label.textContent = playing ? "Pause" : "Music";
+      var on = !audio.paused;
+      box.toggleAttribute("data-playing", on);
+      btn.setAttribute("aria-label", on ? "Pause music" : "Play music");
     }
-
-    window.onSpotifyIframeApiReady = function (api) {
-      var host = document.createElement("div");
-      frame.appendChild(host);
-      api.createController(host, { uri: uri, width: "100%", height: 80 }, function (c) {
-        controller = c;
-        c.addListener("playback_update", function (e) {
-          playing = !e.data.isPaused;
-          if (playing) frame.hidden = false;
-          setUI();
-        });
-        // Try to start as soon as the site opens (works when the browser allows sound)
-        if (wantPlay || !store(true)) c.play();
-      });
-    };
-    var s = document.createElement("script");
-    s.src = "https://open.spotify.com/embed/iframe-api/v1";
-    s.async = true;
-    document.head.appendChild(s);
+    audio.addEventListener("play", setUI);
+    audio.addEventListener("pause", setUI);
 
     function start() {
-      frame.hidden = false;
-      wantPlay = true;
-      if (controller) controller.play();
-      setUI();
+      var pr = audio.play();
+      if (pr && pr.catch) pr.catch(function () { /* blocked until the visitor interacts */ });
     }
 
     btn.addEventListener("click", function () {
-      if (playing) {
-        if (controller) controller.pause();
-        store(false, true);           // visitor turned music off: stop auto-play for this visit
-        frame.hidden = true;
-      } else {
-        store(false, false);
-        start();
-      }
-      setUI();
+      if (!audio.paused) { audio.pause(); sset(OFF_KEY, "1"); }   // visitor turned music off for this visit
+      else { sset(OFF_KEY, null); start(); }
     });
+    vol.addEventListener("input", function () { audio.volume = +vol.value; sset(VOL_KEY, vol.value); });
 
-    // If the browser blocked sound on arrival, start on the visitor's first click, tap or key press anywhere
+    // Try to play as soon as the site opens; if the browser blocks it, start on the first click, tap or key press
+    if (!sget(OFF_KEY)) start();
     function firstTouch(e) {
-      if (e.target.closest && e.target.closest("#music")) return; // the Music button handles itself
-      if (playing || store(true)) return;
+      if (e.target.closest && e.target.closest("#music")) return;
+      if (!audio.paused || sget(OFF_KEY)) return;
       start();
     }
     ["pointerdown", "keydown", "touchend"].forEach(function (ev) {
       document.addEventListener(ev, firstTouch, true);
     });
-    window.__startMusic = start;
   }
 
   /* ---------- featured slider ---------- */

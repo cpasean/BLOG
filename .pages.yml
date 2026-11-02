@@ -83,3 +83,17 @@ content:
         options:
           format: markdown
 
+  - name: music
+    label: Background music (배경음악)
+    type: file
+    path: content/music.yml
+    format: yaml
+    fields:
+      - name: title
+        label: Song title (곡 이름, 버튼 옆에 표시)
+        type: string
+      - name: file
+        label: Audio file (mp3 올리기)
+        type: file
+        options:
+          extensions: [mp3, m4a, ogg, wav]

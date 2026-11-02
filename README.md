@@ -25,10 +25,9 @@ setup/github-pages-deploy.yml ← 자동 빌드·배포 설정 (.github/workflow
 
 ## 배경음악
 
-- 접속 즉시 재생을 시도하고, 브라우저가 막으면 화면 어디든 처음 누르는 순간 재생됩니다. 페이지를 옮겨도 끊기지 않습니다(페이지를 새로고침 없이 바꾸는 방식, `static/site.js`).
+- 편집기(✎ Write) → **Background music** 에서 mp3를 올리고 곡 이름을 적어 Save하면, 모든 페이지 오른쪽 아래에 ▶ 재생 버튼과 음량 막대가 생깁니다. 파일을 비우면 버튼이 사라집니다.
+- 접속 즉시 재생을 시도하고, 브라우저가 막으면 화면 어디든 처음 누르는 순간 재생됩니다. 전곡이 반복 재생됩니다.
 - 방문자가 Pause를 누르면 그 방문 동안은 다시 자동 재생하지 않습니다.
-- 곡: Spotify 공식 음원 "Romance" (Yuhki Kuramoto, 앨범 Misty Lake Louise). 바꾸려면 `site.yml`의 `music_spotify_track` 에 Spotify 곡 ID를 넣으세요.
-- Spotify에 로그인하지 않은 방문자는 30초 미리듣기만 재생됩니다.
 
 ## 이메일 구독
 
