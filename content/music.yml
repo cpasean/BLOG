@@ -1,3 +1,4 @@
-# 배경음악 — 편집기(✎ Write → Background music)에서 mp3를 올리면 홈 오른쪽 아래에 재생 버튼이 생깁니다.
-title: ""
-file: ""
+# 배경음악 — 편집기(✎ Write → Background music)에서 올리거나, GitHub의 music-upload 폴더에 올리면
+# 자동으로 웹용 크기로 줄여서 홈 오른쪽 아래 재생 버튼에 연결됩니다.
+title: Various Artists Romance-영화 달콤한 인생 OST
+file: /music/various-artistsromance-ost.mp3
