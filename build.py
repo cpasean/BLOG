@@ -322,9 +322,9 @@ details.other summary{cursor:pointer;font:500 .95rem var(--display);color:var(--
 .slide .ph{aspect-ratio:16/11;background:var(--sheet);overflow:hidden}
 .slide .ph img{width:100%;height:100%;object-fit:contain;background:#fff}
 .slide .tx{padding:1.4rem 1.6rem 1.3rem}
-.dl{margin:0 0 .6rem;font:400 .8rem/1.3 var(--display);color:var(--muted)}
-.slide h3,.lcard h3{margin:0 0 .6rem;font:600 1.35rem/1.25 var(--display);text-wrap:balance}
-.slide .ex,.lcard .ex{margin:0 0 1.3rem;font:400 .92rem/1.55 var(--display);color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.dl{margin:0 0 .8rem;font:400 .85rem/1.3 var(--display);color:var(--muted)}
+.slide h3,.lcard h3{margin:0 0 .7rem;font:600 1.55rem/1.25 var(--display);text-wrap:balance}
+.slide .ex,.lcard .ex{margin:0 0 1.3rem;font:400 1rem/1.6 var(--display);color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .arw{position:absolute;top:calc((100% - 13rem) / 2);transform:translateY(-50%);width:2.6rem;height:3.4rem;border:0;background:transparent;color:#2B4CC9;font:300 3.2rem/1 var(--body);cursor:pointer}
 .arw.prev{left:.4rem}.arw.next{right:.4rem}
 .arw:hover{color:var(--plum)}
@@ -336,9 +336,10 @@ details.other summary{cursor:pointer;font:500 .95rem var(--display);color:var(--
 /* TRAIN OF THOUGHT / Journal cards */
 .tot-h{margin:0;font:400 1.35rem/1.2 var(--display);letter-spacing:.42em}
 .cardlist{list-style:none;margin:2rem 0 0;padding:0;display:grid;gap:2rem}
-.lcard{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border:1px solid var(--ink);color:var(--ink);text-decoration:none;min-height:21rem;transition:box-shadow .15s}
+.lcard{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border:1px solid var(--ink);color:var(--ink);text-decoration:none;min-height:20rem;transition:box-shadow .15s}
 .lcard:hover{box-shadow:0 6px 18px color-mix(in srgb,var(--ink) 15%,transparent)}
-.lcard.noimg{grid-template-columns:minmax(0,1fr)}
+.lcard.noimg{grid-template-columns:minmax(0,1fr);min-height:0}
+.lcard.noimg hr{margin-top:1rem}
 .lcard .ph{overflow:hidden;background:#fff;border-right:1px solid var(--rule)}
 .lcard .ph img{width:100%;height:100%;object-fit:cover;object-position:top}
 .lcard .tx{display:flex;flex-direction:column;padding:2.2rem 1.8rem 1.4rem;min-width:0}
