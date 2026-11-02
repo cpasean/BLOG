@@ -434,10 +434,14 @@ def page(*, root, title, body, current="", desc=None, canonical="", image="", ma
     nav = "".join(
         f'<a href="{href(root, p)}"{" aria-current=\"page\"" if current == k else ""}>{k}</a>'
         for k, p in (("Home", ""), ("Journal", "journal/"), ("About", "about/"))
-    ) + (f'<a class="write" href="{esc(SITE["editor_url"])}" target="_blank" rel="noopener">✎ Write</a>' if SITE.get("editor_url") else "")
+    ) + (f'<a class="write owner-only" href="{esc(SITE["editor_url"])}" target="_blank" rel="noopener">✎ Write</a>' if SITE.get("editor_url") else "")
     og_img = f"{SITE['url']}{image}" if image.startswith("/") else image
     head = (
         f"<title>{esc(full_title)}</title>"
+        # Owner-only links: open any page once with ?owner=on on your own browser to show "Write"; ?owner=off hides it again
+        "<script>(function(){try{var q=new URLSearchParams(location.search).get('owner');"
+        "if(q==='on')localStorage.setItem('owner','1');else if(q==='off')localStorage.removeItem('owner');"
+        "if(localStorage.getItem('owner')==='1')document.documentElement.classList.add('owner');}catch(e){}})();</script>"
         '<meta name="claude:viewport-fit-sides" content="cover">'
         f'<meta name="description" content="{esc(desc)}">'
         + (f'<meta name="follow.it-verification-code" content="{esc(SITE["follow_it_verification"])}"/>' if SITE.get("follow_it_verification") else "")
@@ -449,7 +453,7 @@ def page(*, root, title, body, current="", desc=None, canonical="", image="", ma
         + f'<link rel="alternate" type="application/rss+xml" title="{esc(SITE["title"])}" href="{root}feed.xml">'
         + (f'<meta name="gc" content="{esc(SITE["goatcounter"])}">' if SITE.get("goatcounter") else "")
         + FONTS + (KATEX if math else "")
-        + f"<style>{CSS}{HL_CSS if '<div class=\"hl\"' in body else ''}</style>"
+        + f"<style>{CSS}html:not(.owner) .owner-only{{display:none!important}}{HL_CSS if '<div class=\"hl\"' in body else ''}</style>"
     )
     content = (
         f'<div class="wrap"><header class="mast"><p class="kicker">{esc(SITE.get("kicker", SITE["tagline"]))}</p>'
@@ -460,7 +464,7 @@ def page(*, root, title, body, current="", desc=None, canonical="", image="", ma
         + f'<script src="{root}site.js?v={SITE_JS_VER}" defer></script>'
         f'<footer class="foot"><span>© {datetime.now().year} {esc(SITE["author"])}, CPA</span>'
         f'<span>Contact: <span class="addr">{esc(SITE["email"])}</span></span>'
-        + (f'<span><a href="{esc(SITE["editor_url"])}" target="_blank" rel="noopener">Write a post</a></span>' if SITE.get("editor_url") else "")
+        + (f'<span class="owner-only"><a href="{esc(SITE["editor_url"])}" target="_blank" rel="noopener">Write a post</a></span>' if SITE.get("editor_url") else "")
         + f'<span><a href="{href(root, "subscribe/")}">Subscribe</a></span></footer></div>'
     )
     if fragment:  # artifact preview root: skeleton is added by the host
