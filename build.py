@@ -518,12 +518,14 @@ def date_line(p):
 
 
 def stats(p, words=False):
-    v, c = p["views"], p["comments"]
+    # views = visits counted on this site (GoatCounter); Wix history is kept in the post files only
+    v = p["views"] if SITE.get("views_include_wix") else 0
+    c = p["comments"]
     if words:
         return (f'<div class="stats"><span><span class="vc" data-slug="{esc(p["slug"])}" data-base="{v}">{v}</span> views</span>'
-                f'<span>{c} comments</span><span class="hrt" title="{p["likes"]} likes">{ICON_HRT}<b>{p["likes"] or ""}</b></span></div>')
+                f'<span>{c} comments</span><span class="hrt">{ICON_HRT}</span></div>')
     return (f'<div class="stats"><span>{ICON_EYE}<span class="vc" data-slug="{esc(p["slug"])}" data-base="{v}">{v}</span></span>'
-            f'<span>{ICON_CMT}{c}</span><span class="hrt" title="{p["likes"]} likes">{ICON_HRT}<b>{p["likes"] or ""}</b></span></div>')
+            f'<span>{ICON_CMT}{c}</span><span class="hrt">{ICON_HRT}</span></div>')
 
 
 def photo_card(p, root):

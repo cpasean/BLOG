@@ -54,3 +54,4 @@ giscus_category: Announcements
 giscus_category_id: DIC_kwDOVfdEac4DKLvs
 # 실시간 조회수 (GoatCounter: https://seanyeon.goatcounter.com)
 goatcounter: seanyeon
+views_include_wix: false   # true로 바꾸면 Wix 시절 조회수에 이어서 셉니다
