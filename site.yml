@@ -48,3 +48,7 @@ follow_it_verification: 8qW2m9akl6qsTy5gDbB7
 # 배경음악 (Spotify 공식 음원) — 다른 곡으로 바꾸려면 Spotify 곡 링크의 track/ 뒤 ID를 넣으세요
 music_spotify_track: 7fbCwWA3zgOgKmHupdPxmy
 music_label: "Romance — Yuhki Kuramoto (A Bittersweet Life theme)"
+# 댓글 (giscus — GitHub Discussions)
+giscus_repo_id: R_kgDOVfdEaQ
+giscus_category: Announcements
+giscus_category_id: DIC_kwDOVfdEac4DKLvs
