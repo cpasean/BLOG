@@ -466,7 +466,8 @@ def page(*, root, title, body, current="", desc=None, canonical="", image="", ma
         f'<footer class="foot"><span>© {datetime.now().year} {esc(SITE["author"])}, CPA</span>'
         f'<span>Contact: <span class="addr">{esc(SITE["email"])}</span></span>'
         + (f'<span class="owner-only"><a href="{esc(SITE["editor_url"])}" target="_blank" rel="noopener">Write a post</a></span>' if SITE.get("editor_url") else "")
-        + f'<span><a href="{href(root, "subscribe/")}">Subscribe</a></span></footer></div>'
+        + f'<span><a href="{href(root, "subscribe/")}">Subscribe</a></span>'
+        + f'<span><a href="{href(root, "owner/")}">Owner</a></span></footer></div>'
     )
     if fragment:  # artifact preview root: skeleton is added by the host
         return '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">' + head + content
@@ -706,6 +707,25 @@ thanks = (
     f'<a class="btn" href="{href("../", "journal/")}">Browse all entries</a></p>'
     '</div></section>'
 )
+owner = (
+    '<section class="post owner-page"><h1>Owner sign-in</h1><div class="prose">'
+    '<p>블로그 주인 전용 페이지입니다. 글쓰기는 GitHub 계정으로 로그인해야 하므로, 이 페이지를 다른 사람이 열어도 글을 고칠 수는 없습니다.</p>'
+    f'<p class="follow"><a class="btn solid" id="owner-go" href="{esc(SITE.get("editor_url", ""))}" target="_blank" rel="noopener">✎ GitHub로 로그인해서 글쓰기</a></p>'
+    '<p class="follow"><button type="button" class="btn" id="owner-toggle"></button></p>'
+    '<p id="owner-state"></p>'
+    '<p class="follow"><a class="btn" href="https://github.com/cpasean/BLOG/upload/main/music-upload" target="_blank" rel="noopener">♪ 큰 음악 파일 올리기 (4MB 초과)</a></p>'
+    '<p><small>휴대폰 팁: 이 페이지에서 브라우저 메뉴의 <b>홈 화면에 추가</b>를 누르면 아이콘 하나로 바로 들어올 수 있습니다.</small></p>'
+    '</div></section>'
+    """<script>(function(){var t=document.getElementById('owner-toggle'),st=document.getElementById('owner-state');
+function on(){try{return localStorage.getItem('owner')==='1'}catch(e){return false}}
+function show(){var o=on();document.documentElement.classList.toggle('owner',o);
+t.textContent=o?'이 기기에서 Write 버튼 숨기기':'이 기기에서 Write 버튼 항상 보이기';
+st.textContent=o?'✓ 이 기기에서는 메뉴에 ✎ Write 버튼이 보입니다.':'지금 이 기기에서는 ✎ Write 버튼이 숨겨져 있습니다.'}
+function set(v){try{v?localStorage.setItem('owner','1'):localStorage.removeItem('owner')}catch(e){}show()}
+t.addEventListener('click',function(){set(!on())});
+document.getElementById('owner-go').addEventListener('click',function(){set(true)});show()})();</script>"""
+)
+write("owner/index.html", page(root="../", title="Owner sign-in", body=owner, canonical="owner/"))
 write("thanks/index.html", page(root="../", title="Thank you", body=thanks, canonical="thanks/"))
 write("subscribe/index.html", page(root="../", title="Subscribe", body=subscribe, canonical="subscribe/"))
 write("feed.xsl", f'''<?xml version="1.0" encoding="UTF-8"?>
@@ -737,7 +757,7 @@ write("feed.xml", f'<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type=
 urls = ["", "journal/", "about/", "subscribe/"] + [f"post/{p['slug']}/" for p in posts]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
       + "".join(f"<url><loc>{SITE['url']}/{u}</loc></url>" for u in urls) + "</urlset>")
-write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE['url']}/sitemap.xml\n")
+write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /owner/\nSitemap: {SITE['url']}/sitemap.xml\n")
 write(".nojekyll", "")
 
 print(f"Built {len(posts)} posts → {OUT.relative_to(ROOT)}/")
