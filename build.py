@@ -663,7 +663,7 @@ for i, p in enumerate(posts):
         f'<div class="poststats">{stats(p, words=True)}</div>'
         + giscus_block()
         + f''
-        f'<p class="legacy">Originally published on Wix, {p["date"].strftime("%B %Y")}.</p>{pager}</article>'
+        f'{pager}</article>'
     )
     write(f"post/{p['slug']}/index.html", page(
         root=root, title=p["title"], body=body, current="Journal", desc=p["excerpt"] or p["title"],
