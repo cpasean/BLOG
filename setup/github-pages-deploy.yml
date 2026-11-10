@@ -26,14 +26,15 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - name: Shrink uploaded background music
+      - name: Shrink uploaded music and photos
         run: |
           command -v ffmpeg >/dev/null || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
-          if [ "$(python tools/music.py)" = "changed" ]; then
+          m=$(python tools/music.py); i=$(python tools/images.py); echo "$i"
+          if [ "$m" = "changed" ] || echo "$i" | grep -qx changed; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add -A music-upload static/music static/images content/music.yml
-            git commit -m "Compress background music for the web"
+            git commit -m "Shrink uploaded music and photos for the web"
             git push
           fi
       - run: python tools/comment_counts.py

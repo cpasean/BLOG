@@ -21,6 +21,13 @@ PREVIEW = "--preview" in sys.argv
 OUT = ROOT / ("preview" if PREVIEW else "dist")
 SITE = yaml.safe_load((ROOT / "site.yml").read_text(encoding="utf-8"))
 SITE["url"] = SITE["url"].rstrip("/")
+# Decorative site photos, editable in the editor (Site photos); missing entries fall back to the originals
+PH = {"home_main": "/images/bg-wheat.jpg", "home_band_1": "/images/bg-handwriting.jpg",
+      "home_about_me": "/images/about-collage.jpg", "home_click_me": "/images/247b38f1425a4a52b28bc87c58d06333.jpg",
+      "home_band_2": "/images/bg-agenda.jpg", "about_bottom": "/images/bg-about.jpg"}
+_ph = ROOT / "content/photos.yml"
+if _ph.exists():
+    PH.update({k: v for k, v in (yaml.safe_load(_ph.read_text(encoding="utf-8")) or {}).items() if v})
 import hashlib
 SITE_JS_VER = hashlib.md5((ROOT / "static/site.js").read_bytes()).hexdigest()[:8]
 
@@ -579,7 +586,7 @@ intro = "".join(f"<p>{esc(x.strip())}</p>" for x in SITE.get("intro", "").split(
 featured = [p for p in posts if p["featured"] and p["cover"]] or [p for p in posts if p["cover"]][:8]
 home = (
     '<section class="split bleed" aria-label="Welcome">'
-    '<div class="photo" style="background-image:url(/images/bg-wheat.jpg)" role="img" aria-label="Wheat field at sunset"></div>'
+    f'<div class="photo" style="background-image:url({PH["home_main"]})" role="img" aria-label="Wheat field at sunset"></div>'
     '<div class="panel"><h2>Life &amp; Thoughts</h2><nav aria-label="Sections">'
     f'<a href="{href("", "journal/")}#life">Life &amp; Thoughts</a>'
     f'<a href="{href("", "about/")}">About</a>'
@@ -593,24 +600,24 @@ home = (
     '<section class="blush bleed"><div class="in"><p class="sig">From the bottom of my heart,</p>'
     + (subscribe_form("band") or f'<div class="follow"><a class="btn solid" href="{href("", "subscribe/")}">Subscribe</a></div>')
     + '</div></section>'
-    '<div class="band thin fixed bleed" style="background-image:url(/images/bg-handwriting.jpg)" role="img" aria-label="Handwritten I CHOOSE"></div>'
+    f'<div class="band thin fixed bleed" style="background-image:url({PH["home_band_1"]})" role="img" aria-label="Handwritten I CHOOSE"></div>'
     '<section class="tot"><div>'
     f'<div class="sect" style="margin-top:0"><h2 class="eyebrow tot-h">Train of thought</h2><a href="{href("", "journal/")}">All {len(posts)} entries →</a></div>'
     + card_list(posts[:8], "")
     + '</div><aside>'
     '<div class="side"><h2 class="eyebrow">About me</h2>'
-    f'<a href="{esc(SITE["instagram_personal"])}" target="_blank" rel="noopener"><img src="/images/about-collage.jpg" alt="Photos of Sean Yeon" width="246" height="246" loading="lazy"></a>'
+    f'<a href="{esc(SITE["instagram_personal"])}" target="_blank" rel="noopener"><img src="{PH["home_about_me"]}" alt="Photos of Sean Yeon" width="246" height="246" loading="lazy"></a>'
     f'<p>{esc(SITE["tagline"])}</p><div class="mot">{"<br>".join(f"{i}. {esc(m)}" for i, m in enumerate(SITE["motto"], 1))}</div>'
     f'<p class="more"><a href="{href("", "about/")}">Read more →</a></p></div>'
     '<div class="side"><h2 class="eyebrow">Click me</h2>'
-    f'<a href="{esc(SITE["instagram_blog"])}" target="_blank" rel="noopener"><img src="/images/247b38f1425a4a52b28bc87c58d06333.jpg" alt="Hiking in the Swiss Alps" loading="lazy"></a></div>'
+    f'<a href="{esc(SITE["instagram_blog"])}" target="_blank" rel="noopener"><img src="{PH["home_click_me"]}" alt="Hiking in the Swiss Alps" loading="lazy"></a></div>'
     + (f'<div class="side"><h2 class="eyebrow">Subscribe</h2>{subscribe_form("side")}</div>' if SITE.get("subscribe_action") else "")
     + '<div class="side"><h2 class="eyebrow">My pick<br>of the month</h2>'
     '<video src="/images/my-pick.mp4" poster="/images/my-pick-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Writing in a notebook"></video>'
     + (f'<div class="pick"><a href="{href("", "post/" + pick["slug"] + "/")}">{esc(pick["title"])}</a>\n{esc(pick_text)}</div>' if pick and pick_text else
        (f'<div class="pick"><a href="{href("", "post/" + pick["slug"] + "/")}">{esc(pick["title"])}</a></div>' if pick else ""))
     + '</div></aside></section>'
-    '<div class="band fixed bleed" style="background-image:url(/images/bg-agenda.jpg);margin-top:3rem" role="img" aria-label="Leather agenda notebook"></div>'
+    f'<div class="band fixed bleed" style="background-image:url({PH["home_band_2"]});margin-top:3rem" role="img" aria-label="Leather agenda notebook"></div>'
     '<section class="contact bleed" id="contact"><h2>Contact Sean</h2>'
     f'<p>{esc(SITE.get("address", ""))}</p><p><span class="addr">{esc(SITE["email"])}</span></p>'
     '<form id="cf"><input id="cf-name" name="name" placeholder="Name" autocomplete="name">'
@@ -674,7 +681,7 @@ photo = about_meta.get("photo", "")
 about = (
     (f'<figure class="about-banner"><img src="{esc(photo)}" alt="Sean Yeon with colleagues"></figure>' if photo else "")
     + f'<section class="about"><div><h1>About</h1><div class="prose">{render_md(about_body)}</div></div></section>'
-    '<div class="band fixed bleed" style="background-image:url(/images/bg-about.jpg);margin-top:3rem" role="img" aria-label="Travel photo"></div>'
+    f'<div class="band fixed bleed" style="background-image:url({PH["about_bottom"]});margin-top:3rem" role="img" aria-label="Travel photo"></div>'
 )
 write("about/index.html", page(root="../", title="About", body=about, current="About", canonical="about/", image=photo))
 

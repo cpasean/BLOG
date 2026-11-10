@@ -76,12 +76,37 @@ content:
       - name: title
         type: string
       - name: photo
-        label: Banner photo
+        label: Banner photo (맨 위 큰 사진 — 휴지통으로 지우고 새 사진 올리기)
         type: image
       - name: body
         type: rich-text
         options:
           format: markdown
+
+  - name: photos
+    label: Site photos (사이트 사진)
+    type: file
+    path: content/photos.yml
+    format: yaml
+    fields:
+      - name: home_main
+        label: 홈 — 맨 위 큰 사진 (밀밭)
+        type: image
+      - name: home_band_1
+        label: 홈 — 가운데 가로 띠 사진 (손글씨)
+        type: image
+      - name: home_about_me
+        label: 홈 — About me 사진 (정사각형 권장)
+        type: image
+      - name: home_click_me
+        label: 홈 — Click me 사진
+        type: image
+      - name: home_band_2
+        label: 홈 — 아래쪽 가로 띠 사진 (다이어리)
+        type: image
+      - name: about_bottom
+        label: About — 맨 아래 가로 띠 사진
+        type: image
 
   - name: music
     label: Background music (배경음악)
