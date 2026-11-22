@@ -294,13 +294,15 @@ img{max-width:100%;height:auto}
 .post .subform{max-width:26rem;margin:1.6rem 0 2rem}
 details.other{margin-top:2rem;border-top:1px solid var(--rule);padding-top:1rem}
 details.other summary{cursor:pointer;font:500 .95rem var(--display);color:var(--muted)}
-.music{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;display:flex;flex-direction:column;align-items:flex-end;gap:.5rem}
+.music{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;display:flex;flex-direction:column;align-items:flex-start;gap:.5rem}
 .music .mbar{display:flex;align-items:center;gap:.7rem;padding:.55rem .9rem .55rem .6rem;border:1px solid var(--ink);border-radius:999px;background:var(--paper);box-shadow:0 4px 14px color-mix(in srgb,var(--ink) 18%,transparent)}
 .music button{display:grid;place-items:center;width:2.2rem;height:2.2rem;border:0;border-radius:50%;background:var(--ink);color:var(--paper);cursor:pointer;padding:0}
 .music button svg{width:16px;height:16px}
 .music .i-pause{display:none}.music[data-playing] .i-pause{display:block}.music[data-playing] .i-play{display:none}
 .music input[type=range]{width:6.5rem;accent-color:var(--ink)}
 .music .mt{font:500 .78rem/1.2 var(--display);max-width:9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body:has(#music) .foot{padding-bottom:5.5rem}
+@media (max-width:640px){.music .mbar{padding:.4rem}.music input[type=range],.music .mt{display:none}}
 @media (max-width:760px){.music .mt{display:none}.music input[type=range]{width:5rem}}
 /* Wix home: photo tiles */
 .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;margin-top:1.6rem}
