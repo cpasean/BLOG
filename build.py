@@ -5,7 +5,7 @@
     python build.py --preview  # builds ./preview with explicit index.html links
 
 Write a post: add content/posts/<slug>.md with front matter
-(title, date, category: Work|Life, optional cover, math: true).
+(title, date, category: Work|Life|Meditations, optional cover, math: true).
 """
 import html, re, shutil, sys
 from datetime import datetime, timezone
@@ -237,6 +237,7 @@ img{max-width:100%;height:auto}
 .mins{text-align:right}
 .cat{font:500 .7rem/1.6 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--green)}
 .cat.life{color:var(--red)}
+.cat.meditations{color:var(--plum)}
 .ttl{font:600 1.12rem/1.35 var(--display);min-width:0}
 .ex{grid-column:4/6;color:var(--muted);font-size:.93rem;line-height:1.55;margin-top:.15rem}
 .filters{display:flex;flex-wrap:wrap;gap:.5rem;margin:.2rem 0 1rem}

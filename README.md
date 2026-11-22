@@ -18,7 +18,7 @@ setup/github-pages-deploy.yml ← 자동 빌드·배포 설정 (.github/workflow
 1. 블로그 메뉴의 **✎ Write** 를 누르거나 https://app.pagescms.org/cpasean/BLOG 로 갑니다 (GitHub 계정으로 로그인).
    - **✎ Write 버튼은 주인만 보입니다.** 어느 기기(휴대폰 포함)에서든 맨 아래 **Owner** 링크(https://seanyeon.com/owner/)를 열고 **GitHub로 로그인해서 글쓰기**를 누르면 됩니다. 그 기기에서는 이후 메뉴에 ✎ Write가 계속 보입니다(같은 페이지에서 숨기기도 가능). 실제 편집은 GitHub 로그인이 있어야만 되므로 다른 사람은 글을 고칠 수 없습니다.
 2. **Posts → Add an entry** 를 누릅니다.
-3. 제목, 날짜, 분류(Work/Life)를 넣고 본문을 씁니다. 사진은 본문 편집기의 이미지 버튼으로 바로 올릴 수 있습니다.
+3. 제목, 날짜, 분류(Work/Life/Meditations)를 넣고 본문을 씁니다. 사진은 본문 편집기의 이미지 버튼으로 바로 올릴 수 있습니다.
 4. **Save** 를 누르면 1~2분 뒤 블로그에 자동으로 게시됩니다.
 - 기존 글 수정도 같은 화면에서 **Edit** 로 합니다.
 - 공개 전에 저장만 하려면 **Draft** 를 체크하세요.
@@ -53,7 +53,7 @@ setup/github-pages-deploy.yml ← 자동 빌드·배포 설정 (.github/workflow
 ---
 title: "Monte Carlo simulation for retirement savings"
 date: 2026-11-02
-category: Work        # Work 또는 Life
+category: Work        # Work, Life 또는 Meditations
 ---
 
 본문을 여기에 씁니다. **굵게**, *기울임*, [링크](https://example.com)

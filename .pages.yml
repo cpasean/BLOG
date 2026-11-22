@@ -33,7 +33,7 @@ content:
         type: select
         default: Life
         options:
-          values: [Work, Life]
+          values: [Work, Life, Meditations]
       - name: featured
         label: Featured — 체크하면 홈 화면 추천 글(사진 슬라이드)에 표시
         type: boolean
